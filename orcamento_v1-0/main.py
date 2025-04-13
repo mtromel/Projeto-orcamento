@@ -23,9 +23,11 @@ import deletar
 import relatorios
 import create_bd_orcamento
 import sqlite3
+from pathlib import Path
 
 
-con, cur = utils.conectar_bd('bd_orcamento.db')
+THIS_FOLDER = Path(__file__).parent.resolve()
+con, cur = utils.conectar_bd(THIS_FOLDER / 'bd_orcamento.db')
 
 
 # Consulta se o banco de dados existe, caso contrário, cria o banco de dados
@@ -133,8 +135,9 @@ while True:
                     utils.print_cabecalho('LISTA DAS DESPESAS CADASTRADAS')
                     per = input('Informe o período que deseja consultar: ')
                     print()
-                    consultas.consulta_com_where(cur, 'despesas',
-                                                 'periodo_id', per)
+                    consultas.consulta_padrao_com_inner_where(cur, 'despesas',
+                                                              'periodo_id',
+                                                              per)
                     input('Pressione ENTER para continuar...')
                 case '2':
                     # Chama a função de consulta de períodos cadastrados
@@ -161,7 +164,7 @@ while True:
                     os.system('cls')
                     utils.print_cabecalho('LISTA DAS DESPESAS FIXAS'
                                           ' CADASTRADAS')
-                    consultas.consulta_padrao(cur, 'desp_fixa')
+                    consultas.consulta_padrao_com_inner(cur, 'desp_fixa')
                     input('Pressione ENTER para continuar...')
                 case '6':
                     # Chama a função de consulta de origens cadastradas
@@ -176,8 +179,9 @@ while True:
                     utils.print_cabecalho('LISTA DAS RECEITAS CADASTRADAS')
                     per = input('Informe o período que deseja consultar: ')
                     print()
-                    consultas.consulta_com_where(cur, 'receitas',
-                                                 'periodo_id', per)
+                    consultas.consulta_padrao_com_inner_where(cur, 'receitas',
+                                                              'periodo_id',
+                                                              per)
                     input('Pressione ENTER para continuar...')
                 case '8':
                     # Chama a função de consulta de templates de receitas
