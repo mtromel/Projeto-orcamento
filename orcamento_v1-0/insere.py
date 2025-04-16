@@ -2,11 +2,13 @@ import utils
 import locale
 import os
 from datetime import datetime
+from pathlib import Path
 import consultas
 
 
+THIS_FOLDER = Path(__file__).parent.resolve()
 locale.setlocale(locale.LC_ALL, 'pt_BR.UTF-8')
-con, cur = utils.conectar_bd('bd_orcamento.db')
+con, cur = utils.conectar_bd(THIS_FOLDER / 'bd_orcamento.db')
 cabecalho_padrao = 'CADASTRO DE '
 
 
@@ -293,28 +295,27 @@ def cadastro_despesas():
         ano_str = str(ano)
         print()
         print('Periodos cadastrados para o ano {}:'.format(ano))
-        consultas.consulta_com_like(cur, '*', 'periodo', 'periodo', ano_str)
+        periodo, col = consultas.consulta_com_like(cur, '*', 'periodo',
+                                                   'periodo', ano_str)
+        utils.imprimir_tabelas(periodo, col)
         print()
         per = input('Insira o número referente ao período desejado: ')
         os.system('cls')
         utils.print_cabecalho(cabecalho)
-        cons_desp = consultas.consulta_com_where_sem_imprimir(
-            cur, '*', 'despesas', 'periodo_id', per)
+        cons_desp, _ = consultas.consulta_com_where(cur, 'despesas',
+                                                    'periodo_id', per)
 
         if not cons_desp:
             desp_fixa_input = input('Ainda não há despesas cadastradas para'
                                     ' este período. Deseja importar as'
                                     ' despesas fixas cadastradas? Digite S'
                                     ' para Sim e N para Não: ').upper()
-            per_completo = consultas.consulta_com_where_sem_imprimir(
-                cur, 'periodo', 'periodo', 'id', per)
-            per_completo_str = str(per_completo[0][0])
+            per_completo = periodo[int(per) - 1][1]
             per_int = int(per)
             if desp_fixa_input == 'S':
-                desp_fixas = consultas.consulta_padrao_sem_imprimir(
-                    cur, 'desp_fixa')
+                desp_fixas, _ = consultas.consulta_padrao(cur, 'desp_fixa')
                 for linha in desp_fixas:
-                    data_completa = (str(linha[2]) + '/' + per_completo_str)
+                    data_completa = (str(linha[2]) + '/' + per_completo)
                     data_convertida = datetime.strptime(data_completa,
                                                         '%d/%b/%y')
                     data_formatada = data_convertida.strftime('%d/%m/%Y')
@@ -327,7 +328,11 @@ def cadastro_despesas():
                 con.commit()
 
         print('Despesas já cadastradas para este período:')
-        consultas.consulta_com_where(cur, 'despesas', 'periodo_id', per)
+        linhas, col = consultas.consulta_padrao_com_inner_where(cur,
+                                                                'despesas',
+                                                                'periodo_id',
+                                                                per)
+        utils.imprimir_tabelas(linhas, col)
         print()
         confirm = input('Deseja cadastrar uma nova despesa? Digite S para Sim'
                         ' e N para Não: ').upper()
@@ -360,7 +365,7 @@ def cadastro_despesas():
                     tipo = 'FIXA'
                     break
                 elif tipo_in == 'V':
-                    tipo = 'VARIÁVEL'
+                    tipo = 'VARIAVEL'
                     break
                 else:
                     input('Opção inválida. Tecle ENTER para tentar novamente')
@@ -369,14 +374,17 @@ def cadastro_despesas():
             num_parc = input(
                 'Informe o número de parcelas (zero para despesa única): ')
             print('-----------------------------------------------')
-            consultas.consulta_padrao(cur, 'categorias')
+            linhas, col = consultas.consulta_padrao(cur, 'categorias')
+            utils.imprimir_tabelas(linhas, col)
             categ = input('Selecione uma das categorias listadas acima: ')
             print('-----------------------------------------------')
-            consultas.consulta_padrao(cur, 'planejamento')
+            linhas, col = consultas.consulta_padrao(cur, 'planejamento')
+            utils.imprimir_tabelas(linhas, col)
             grp_plan = input(
                 'Selecione um dos grupos de planejamento listados acima: ')
             print('-----------------------------------------------')
-            consultas.consulta_padrao(cur, 'origem')
+            linhas, col = consultas.consulta_padrao(cur, 'origem')
+            utils.imprimir_tabelas(linhas, col)
             org_desp = input('Selecione uma das origens listadas acima: ')
 
             if num_parc == '0':
@@ -392,8 +400,8 @@ def cadastro_despesas():
                          num_parc, categ, grp_plan, org_desp, per,
                          num_parc_atual))
             print()
-            print('Despesa cadastrada com sucesso')
             con.commit()
+            print('Despesa cadastrada com sucesso')
 
             if num_parc != '0':
                 print()
@@ -404,7 +412,7 @@ def cadastro_despesas():
                                 ' para Não: ').upper()
 
                 if confirm == 'S':
-                    prx_per = int(per)
+                    prx_per = per_int
                     for i in range(2, int(num_parc) + 1):
                         prx_per += 1
                         cur.execute("INSERT INTO despesas (desc_loja,"
