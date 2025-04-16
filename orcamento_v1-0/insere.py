@@ -46,11 +46,12 @@ def cadastro_planejamento():
         cabecalho = cabecalho_padrao + 'GRUPOS DE PLANEJAMENTO'
         utils.print_cabecalho(cabecalho)
         print('Grupos de planejamento cadastrados:')
-        consultas.consulta_padrao(cur, 'planejamento')
+        linhas, col = consultas.consulta_padrao(cur, 'planejamento')
+        utils.imprimir_tabelas(linhas, col)
         grupo = input('Digite o grupo do planejamento que deseja incluir: ')
 
-        consulta = consultas.consulta_com_like_sem_imprimir(
-            cur, 'grupo', 'planejamento', 'grupo', grupo)
+        consulta, _ = consultas.consulta_com_like(cur, 'grupo', 'planejamento',
+                                                  'grupo', grupo)
 
         if consulta:
             print('Planejamento já cadastrado')
@@ -75,22 +76,19 @@ def cadastra_categorias():
         cabecalho = cabecalho_padrao + 'CATEGORIAS'
         utils.print_cabecalho(cabecalho)
         print('Categorias cadastradas:')
-        consultas.consulta_padrao(cur, 'categorias')
+        linhas, col = consultas.consulta_padrao(cur, 'categorias')
+        utils.imprimir_tabelas(linhas, col)
         categoria = input('Insira a nova categoria: ')
-
-        consulta = consultas.consulta_com_like_sem_imprimir(
-            cur, 'categoria', 'categorias', 'categoria', categoria)
+        consulta, _ = consultas.consulta_com_like(cur, 'categoria',
+                                                  'categorias', 'categoria',
+                                                  categoria)
         if consulta:
             print('Categoria já exite')
         else:
             cur.execute('INSERT INTO categorias (categoria) VALUES (?)',
                         (categoria,))
-            print('Categoria inserida com sucesso')
             con.commit()
-        print()
-        print('------------------------------------------------')
-        print('Categorias cadastradas:')
-        consultas.consulta_padrao(cur, 'categorias')
+            print('Categoria inserida com sucesso')
 
         continua = utils.reiniciar_loop('categorias')
         if continua == 'continue':
@@ -111,8 +109,8 @@ def cadastro_periodo():
 
         if year <= 99:
             year_str = str(year)
-            retorno = consultas.consulta_com_like_sem_imprimir(
-                cur, 'periodo', 'periodo', 'periodo', year_str)
+            retorno, _ = consultas.consulta_com_like(cur, 'periodo', 'periodo',
+                                                     'periodo', year_str)
 
             if retorno:
                 print('Periodo já cadastrado')
@@ -134,7 +132,8 @@ def cadastro_periodo():
         print()
         print('------------------------------------------------')
         print('Períodos cadastrados:')
-        consultas.consulta_padrao(cur, 'periodo')
+        periodo, col = consultas.consulta_padrao(cur, 'periodo')
+        utils.imprimir_tabelas(periodo, col)
 
         continua = utils.reiniciar_loop('períodos')
         if continua == 'continue':

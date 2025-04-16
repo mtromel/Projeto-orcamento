@@ -40,4 +40,10 @@ def create_bd():
                 ' DATE, valor REAL, periodo_id INTEGER, FOREIGN'
                 ' KEY(periodo_id) REFERENCES periodo(id))')
     con.commit()
+    cur.execute('INSERT INTO planejamento (grupo) VALUES ("Essencial")')
+    cur.execute('INSERT INTO planejamento (grupo) VALUES ("Educação")')
+    cur.execute('INSERT INTO planejamento (grupo) VALUES ("Objetivos")')
+    cur.execute('INSERT INTO planejamento (grupo) VALUES ("Aposentadoria")')
+    cur.execute('INSERT INTO planejamento (grupo) VALUES ("Gastar")')
+    con.commit()
     con.close()

@@ -61,12 +61,11 @@ while True:
             print('1 - CADASTRAR DESPESAS')
             print('2 - CADASTRAR PERÍODOS')
             print('3 - CADASTRAR CATEGORIAS')
-            print('4 - CADASTRAR GRUPOS DE PLANEJAMENTO')
-            print('5 - CADASTRAR DESPESAS FIXAS')
-            print('6 - CADASTRAR ORIGENS')
-            print('7 - CADASTRAR RECEITAS')
-            print('8 - CADASTRAR TEMPLATES DE RECEITAS')
-            print('9 - VOLTAR')
+            print('4 - CADASTRAR DESPESAS FIXAS')
+            print('5 - CADASTRAR ORIGENS')
+            print('6 - CADASTRAR RECEITAS')
+            print('7 - CADASTRAR TEMPLATES DE RECEITAS')
+            print('8 - VOLTAR')
             opcao_cad = input('SELECIONE A OPÇÃO DESEJADA: ')
             match opcao_cad:
                 case '1':
@@ -82,26 +81,22 @@ while True:
                     insere.cadastra_categorias()
                     continue
                 case '4':
-                    # Chama a função de cadastro de grupos de planejamento
-                    insere.cadastro_planejamento()
-                    continue
-                case '5':
                     # Chama a função de cadastro de despesas fixas
                     insere.cadastro_despesas_fixas()
                     continue
-                case '6':
+                case '5':
                     # Chama a função de cadastro de origens de despesas
                     insere.cadastro_origens()
                     continue
-                case '7':
+                case '6':
                     # Chama a função de cadastro de receitas
                     insere.cadastro_receitas()
                     continue
-                case '8':
+                case '7':
                     # Chama a função de cadastro de templates de receitas
                     insere.cadastro_templates_receitas()
                     continue
-                case '9':
+                case '8':
                     # Retorna ao menu principal
                     continue
                 case _:
