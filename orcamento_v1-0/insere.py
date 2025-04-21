@@ -19,17 +19,18 @@ def cadastro_origens():
         cabecalho = cabecalho_padrao + 'ORIGENS'
         utils.print_cabecalho(cabecalho)
         print('Origens cadastradas:')
-        consultas.consulta_padrao(cur, 'origem')
+        linha, col = consultas.consulta_padrao(cur, 'origem')
+        utils.imprimir_tabelas(linha, col)
         origem = input('Insira a nova origem: ')
 
-        consulta = consultas.consulta_com_like_sem_imprimir(
-            cur, 'origem', 'origem', 'origem', origem)
+        consulta, _ = consultas.consulta_com_like(cur, 'origem', 'origem',
+                                                  'origem', origem)
         if consulta:
             print('Origem já existe')
         else:
             cur.execute('INSERT INTO origem (origem) VALUES (?)', (origem,))
-            print('Origem inserida com sucesso')
             con.commit()
+            print('Origem inserida com sucesso')
 
         continua = utils.reiniciar_loop('origens')
         if continua == 'continue':
@@ -151,7 +152,8 @@ def cadastro_templates_receitas():
         cabecalho = cabecalho_padrao + 'TEMPLATES DE RECEITAS'
         utils.print_cabecalho(cabecalho)
         print('Templates de receitas já cadastrados:')
-        consultas.consulta_padrao(cur, 'rec_templates')
+        linha, col = consultas.consulta_padrao(cur, 'rec_templates')
+        utils.imprimir_tabelas(linha, col)
         confirm = input('Deseja cadastrar um novo template de receita? Digite'
                         ' S para Sim e N para Não: ').upper()
 
@@ -184,7 +186,8 @@ def cadastro_despesas_fixas():
         cabecalho = cabecalho_padrao + 'DESPESAS FIXAS'
         utils.print_cabecalho(cabecalho)
         print('Despesas fixas já cadastradas:')
-        consultas.consulta_padrao(cur, 'desp_fixa')
+        linhas, col = consultas.consulta_padrao(cur, 'desp_fixa')
+        utils.imprimir_tabelas(linhas, col)
         confirm = input('Deseja cadastrar uma nova despesa fixa? Digite S para'
                         ' Sim e N para Não: ').upper()
 
@@ -195,17 +198,20 @@ def cadastro_despesas_fixas():
             print()
             print('--------------------------------------------')
             print('Categorias cadastradas:')
-            consultas.consulta_padrao(cur, 'categorias')
+            linhas, col = consultas.consulta_padrao(cur, 'categorias')
+            utils.imprimir_tabelas(linhas, col)
             categoria = int(input('Insira o número da categoria: '))
             print()
             print('--------------------------------------------')
             print('Grupos de planejamento cadastrados: ')
-            consultas.consulta_padrao(cur, 'planejamento')
+            linhas, col = consultas.consulta_padrao(cur, 'planejamento')
+            utils.imprimir_tabelas(linhas, col)
             grupo = int(input('Insira o número do grupo de planejamento: '))
             print()
             print('--------------------------------------------')
             print('Origens cadastradas: ')
-            consultas.consulta_padrao(cur, 'origem')
+            linhas, col = consultas.consulta_padrao(cur, 'origem')
+            utils.imprimir_tabelas(linhas, col)
             origem = int(input('Insira o número da origem: '))
 
             cur.execute('INSERT INTO desp_fixa (descricao, dia, valor,'
@@ -238,10 +244,11 @@ def cadastro_receitas():
             print()
             print('------------------------------------------------')
             print('Templates de receitas já cadastrados:')
-            consultas.consulta_padrao(cur, 'rec_templates')
+            linha, col = consultas.consulta_padrao(cur, 'rec_templates')
+            utils.imprimir_tabelas(linha, col)
             id_template = input('Insira o número do template desejado: ')
-            rec = consultas.consulta_com_where_sem_imprimir(
-                cur, '*', 'rec_templates', 'id', id_template)
+            rec, _ = consultas.consulta_com_where(cur, 'rec_templates', 'id',
+                                                  id_template)
             desc = rec[0][1]
             valor = rec[0][2]
             data = rec[0][3]
@@ -253,12 +260,13 @@ def cadastro_receitas():
         year = int(input('Digite o ano do periodo que deseja usar no formato'
                          ' ##: '))
         year_str = str(year)
-        consulta = consultas.consulta_com_like_sem_imprimir(
-            cur, '*', 'periodo', 'periodo', year_str)
+        consulta, _ = consultas.consulta_com_like(cur, '*', 'periodo',
+                                                  'periodo', year_str)
         if consulta:
             print('Periodos cadastrados para o ano {}:'.format(year))
-            consultas.consulta_com_like(cur, '*', 'periodo', 'periodo',
-                                        year_str)
+            linha, col = consultas.consulta_com_like(cur, '*', 'periodo',
+                                                     'periodo', year_str)
+            utils.imprimir_tabelas(linha, col)
         else:
             print('Ainda não há períodos cadastrados para o ano informado')
 
@@ -274,7 +282,9 @@ def cadastro_receitas():
         print('--------------------------------------------------------------')
         print()
         print('Receitas já inseridas para este período:')
-        consultas.consulta_com_where(cur, 'receitas', 'periodo_id', per)
+        linha, col = consultas.consulta_com_where(cur, 'receitas',
+                                                  'periodo_id', per)
+        utils.imprimir_tabelas(linha, col)
         continua = utils.reiniciar_loop('templates de receitas')
         if continua == 'continue':
             continue
