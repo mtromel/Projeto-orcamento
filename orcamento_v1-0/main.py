@@ -130,21 +130,23 @@ while True:
                     utils.print_cabecalho('LISTA DAS DESPESAS CADASTRADAS')
                     per = input('Informe o período que deseja consultar: ')
                     print()
-                    consultas.consulta_padrao_com_inner_where(cur, 'despesas',
-                                                              'periodo_id',
-                                                              per)
+                    linha, col = consultas.consulta_padrao_com_inner_where(
+                        cur, 'despesas', 'periodo_id', per)
+                    utils.imprimir_tabelas(linha, col)
                     input('Pressione ENTER para continuar...')
                 case '2':
                     # Chama a função de consulta de períodos cadastrados
                     os.system('cls')
                     utils.print_cabecalho('LISTA DOS PERÍODOS CADASTRADOS')
-                    consultas.consulta_padrao(cur, 'periodo')
+                    linha, col = consultas.consulta_padrao(cur, 'periodo')
+                    utils.imprimir_tabelas(linha, col)
                     input('Pressione ENTER para continuar...')
                 case '3':
                     # Chama a função de consulta de categorias cadastradas
                     os.system('cls')
                     utils.print_cabecalho('LISTA DAS CATEGORIAS CADASTRADAS')
-                    consultas.consulta_padrao(cur, 'categorias')
+                    linha, col = consultas.consulta_padrao(cur, 'categorias')
+                    utils.imprimir_tabelas(linha, col)
                     input('Pressione ENTER para continuar...')
                 case '4':
                     # Chama a função de consulta de grupos de planejamento
@@ -152,20 +154,24 @@ while True:
                     os.system('cls')
                     utils.print_cabecalho('LISTA DOS GRUPOS DE PLANEJAMENTO'
                                           ' CADASTRADOS')
-                    consultas.consulta_padrao(cur, 'planejamento')
+                    linha, col = consultas.consulta_padrao(cur, 'planejamento')
+                    utils.imprimir_tabelas(linha, col)
                     input('Pressione ENTER para continuar...')
                 case '5':
                     # Chama a função de consulta de despesas fixas cadastradas
                     os.system('cls')
                     utils.print_cabecalho('LISTA DAS DESPESAS FIXAS'
                                           ' CADASTRADAS')
-                    consultas.consulta_padrao_com_inner(cur, 'desp_fixa')
+                    linha, col = consultas.consulta_padrao_com_inner(
+                        cur, 'desp_fixa')
+                    utils.imprimir_tabelas(linha, col)
                     input('Pressione ENTER para continuar...')
                 case '6':
                     # Chama a função de consulta de origens cadastradas
                     os.system('cls')
                     utils.print_cabecalho('LISTA DAS ORIGENS CADASTRADAS')
-                    consultas.consulta_padrao(cur, 'origem')
+                    linha, col = consultas.consulta_padrao(cur, 'origem')
+                    utils.imprimir_tabelas(linha, col)
                     input('Pressione ENTER para continuar...')
                 case '7':
                     # Chama a função de consulta de receitas cadastradas
@@ -174,9 +180,9 @@ while True:
                     utils.print_cabecalho('LISTA DAS RECEITAS CADASTRADAS')
                     per = input('Informe o período que deseja consultar: ')
                     print()
-                    consultas.consulta_padrao_com_inner_where(cur, 'receitas',
-                                                              'periodo_id',
-                                                              per)
+                    linha, col = consultas.consulta_padrao_com_inner_where(
+                        cur, 'receitas', 'periodo_id', per)
+                    utils.imprimir_tabelas(linha, col)
                     input('Pressione ENTER para continuar...')
                 case '8':
                     # Chama a função de consulta de templates de receitas
@@ -184,7 +190,9 @@ while True:
                     os.system('cls')
                     utils.print_cabecalho('LISTA DOS TEMPLATES DE RECEITAS'
                                           ' CADASTRADAS')
-                    consultas.consulta_padrao(cur, 'rec_templates')
+                    linha, col = consultas.consulta_padrao(cur,
+                                                           'rec_templates')
+                    utils.imprimir_tabelas(linha, col)
                     input('Pressione ENTER para continuar...')
                 case '9':
                     # Retorna ao menu principal
