@@ -26,7 +26,21 @@ def alterar_despesa(con, cur, per, id_desp):
     num_parc = input(
         'Informe o número de parcelas (zero para despesa única): ')
     grp_plan = input('Informe o id do grupo de planejamento: ')
-    tipo = input('Informe se a despesa é fixa ou variável: ').upper()
+
+    while True:
+        tipo_in = input('Informe "f" se a despesa é fixa ou "v" se é'
+                        ' variável: ').upper()
+
+        if tipo_in == 'F':
+            tipo = 'FIXA'
+            break
+        elif tipo_in == 'V':
+            tipo = 'VARIAVEL'
+            break
+        else:
+            input('Opção inválida. Tecle ENTER para tentar novamente')
+            continue
+
     org_desp = input('Informe o id da origem: ')
 
     if num_parc == '0':
@@ -41,8 +55,8 @@ def alterar_despesa(con, cur, per, id_desp):
                                       valor, tipo, num_parc, categ, grp_plan,
                                       org_desp, per, num_parc_atual, id_desp))
     print()
-    print('Despesa alterada com sucesso')
     con.commit()
+    print('Despesa alterada com sucesso')
 
     if num_parc != '0':
         print()
@@ -79,8 +93,8 @@ def alterar_categoria(cur, con, id_cat):
     cur.execute("UPDATE categorias SET categoria = ? WHERE id = ?", (
         nome, id_cat))
     print()
-    print('Categoria alterada com sucesso')
     con.commit()
+    print('Categoria alterada com sucesso')
     input('Pressione ENTER para continuar...')
 
 
@@ -118,8 +132,8 @@ def alterar_origem(cur, con, id_org):
     cur.execute("UPDATE origem SET origem = ? WHERE id = ?", (
         nome, id_org))
     print()
-    print('Origem alterada com sucesso')
     con.commit()
+    print('Origem alterada com sucesso')
     input('Pressione ENTER para continuar...')
 
 
@@ -133,8 +147,8 @@ def alterar_receitas(con, cur, per, id_rece):
                 " periodo_id = ? WHERE id = ?", (desc, data, valor, per,
                                                  id_rece))
     print()
-    print('Despesa alterada com sucesso')
     con.commit()
+    print('Despesa alterada com sucesso')
     input('Pressione ENTER para continuar...')
 
 
@@ -147,6 +161,6 @@ def alterar_rec_templates(con, cur, id_tpl):
     cur.execute("UPDATE rec_templates SET descricao = ?, data = ?, valor = ?"
                 " WHERE id = ?", (desc, data, valor, id_tpl))
     print()
-    print('Template de receita alterada com sucesso')
     con.commit()
+    print('Template de receita alterada com sucesso')
     input('Pressione ENTER para continuar...')

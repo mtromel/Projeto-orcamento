@@ -212,12 +212,11 @@ while True:
             print()
             print('1 - ALTERAR DESPESAS CADASTRADAS')
             print('2 - ALTERAR CATEGORIAS CADASTRADAS')
-            print('3 - ALTERAR GRUPOS DE PLANEJAMENTO CADASTRADOS')
-            print('4 - ALTERAR DESPESAS FIXAS CADASTRADAS')
-            print('5 - ALTERAR ORIGENS CADASTRADAS')
-            print('6 - ALTERAR RECEITAS CADASTRADAS')
-            print('7 - ALTERAR TEMPLATES DE RECEITAS CADASTRADAS')
-            print('8 - VOLTAR')
+            print('3 - ALTERAR DESPESAS FIXAS CADASTRADAS')
+            print('4 - ALTERAR ORIGENS CADASTRADAS')
+            print('5 - ALTERAR RECEITAS CADASTRADAS')
+            print('6 - ALTERAR TEMPLATES DE RECEITAS CADASTRADAS')
+            print('7 - VOLTAR')
             opcao_cad = input('SELECIONE A OPÇÃO DESEJADA: ')
             match opcao_cad:
                 case '1':
@@ -230,22 +229,21 @@ while True:
                     print()
                     # Consulta as despesas cadastradas no período informado
                     # e imprime na tela
-                    consultas.consulta_com_where(
+                    linhas, col = consultas.consulta_com_where(
                         cur, 'despesas', 'periodo_id', per)
-                    # Carrega em memória as despesas cadastradas no período
-                    # informado sem imprimir na tela
-                    listagem = consultas.consulta_com_where_sem_imprimir(
-                        cur, '*', 'despesas', 'periodo_id', per)
-                    if listagem:
+                    utils.imprimir_tabelas(linhas, col)
+                    
+                    if linhas:
                         desp = input(
                             'Informe o id da despesa que deseja alterar: ')
-                        if desp not in [str(linha[0]) for linha in listagem]:
+                        if desp not in [str(linha[0]) for linha in linhas]:
                             print('Id informado não encontrado.')
                             input('Pressione ENTER para continuar...')
                         else:
                             os.system('cls')
-                            consultas.consulta_com_where(
+                            cons, col = consultas.consulta_com_where(
                                 cur, 'despesas', 'id', desp)
+                            utils.imprimir_tabelas(cons, col)
                             alterar.alterar_despesa(con, cur, per, desp)
                     else:
                         print('Nenhum registro encontrado para o período'
@@ -256,109 +254,78 @@ while True:
                     os.system('cls')
                     utils.print_cabecalho('LISTA DAS CATEGORIAS CADASTRADAS')
                     # Consulta as categorias cadastradas e imprime na tela
-                    consultas.consulta_padrao(cur, 'categorias')
-                    # Carrega em memória as categorias cadastradas sem
-                    # imprimir na tela
-                    listagem = consultas.consulta_padrao_sem_imprimir(
-                        cur, 'categorias')
-                    id_cat = input(
-                        'Insira o id da categoria que deseja alterar: ')
-                    if listagem:
-                        if id_cat not in [str(linha[0]) for linha in listagem]:
+                    linhas, col = consultas.consulta_padrao(cur, 'categorias')
+                    utils.imprimir_tabelas(linhas, col)
+
+                    if linhas:
+                        id_cat = input(
+                            'Insira o id da categoria que deseja alterar: ')
+                        
+                        if id_cat not in [str(linha[0]) for linha in linhas]:
                             print('ID informado não encontrado.')
                             input('Pressione ENTER para continuar...')
                         else:
                             os.system('cls')
-                            consultas.consulta_com_where(
+                            cons, col = consultas.consulta_com_where(
                                 cur, 'categorias', 'id', id_cat)
+                            utils.imprimir_tabelas(cons, col)
                             alterar.alterar_categoria(cur, con, id_cat)
                     else:
                         print('Nenhum registro encontrado.')
                         input('Pressione ENTER para continuar...')
                 case '3':
-                    # Chama a função de alteração de grupos de planejamento
-                    # cadastrados
-                    os.system('cls')
-                    utils.print_cabecalho(
-                        'LISTA DOS GRUPOS DE PLANEJAMENTO CADASTRADOS')
-
-                    # Consulta os grupos de planejamento cadastrados e imprime
-                    # na tela
-                    consultas.consulta_padrao(cur, 'planejamento')
-
-                    # Carrega em memória os grupos de planejamento cadastrados
-                    # sem imprimir na tela
-                    listagem = consultas.consulta_padrao_sem_imprimir(
-                        cur, 'planejamento')
-                    grupo = input('Digite o id do grupo do planejamento que'
-                                  ' deseja alterar: ')
-                    if listagem:
-                        if grupo not in [str(linha[0]) for linha in listagem]:
-                            print('ID informado não encontrado.')
-                            input('Pressione ENTER para continuar...')
-                        else:
-                            os.system('cls')
-                            consultas.consulta_com_where(
-                                cur, 'planejamento', 'id', grupo)
-                            alterar.alterar_planejamento(cur, con, grupo)
-                    else:
-                        print('Nenhum registro encontrado.')
-                        input('Pressione ENTER para continuar...')
-                case '4':
                     # Chama a função de alteração de despesas fixas cadastradas
                     os.system('cls')
                     utils.print_cabecalho(
                         'LISTA DAS DESPESAS FIXAS CADASTRADAS')
 
                     # Consulta as despesas fixas cadastradas e imprime na tela
-                    consultas.consulta_padrao(cur, 'desp_fixa')
+                    linhas, col = consultas.consulta_padrao(cur, 'desp_fixa')
+                    utils.imprimir_tabelas(linhas, col)
 
-                    # Carrega em memória as despesas fixas cadastradas sem
-                    # imprimir na tela
-                    listagem = consultas.consulta_padrao_sem_imprimir(
-                        cur, 'desp_fixa')
-                    id_desp_fixa = input(
-                        'Insira o id da despesa fixa que deseja alterar: ')
-                    if listagem:
+                    if linhas:
+                        id_desp_fixa = input(
+                            'Insira o id da despesa fixa que deseja alterar: ')
+
                         if id_desp_fixa not in [str(linha[0]) for linha in
-                                                listagem]:
+                                                linhas]:
                             print('ID informado não encontrado.')
                             input('Pressione ENTER para continuar...')
                         else:
                             os.system('cls')
-                            consultas.consulta_com_where(
+                            cons, col = consultas.consulta_com_where(
                                 cur, 'desp_fixa', 'id', id_desp_fixa)
+                            utils.imprimir_tabelas(cons, col)
                             alterar.alterar_desp_fixa(cur, con, id_desp_fixa)
                     else:
                         print('Nenhum registro encontrado.')
                         input('Pressione ENTER para continuar...')
-                case '5':
+                case '4':
                     # Chama a função de alteração de origens cadastradas
                     os.system('cls')
                     utils.print_cabecalho('LISTA DAS ORIGENS CADASTRADAS')
 
                     # Consulta as origens cadastradas e imprime na tela
-                    consultas.consulta_padrao(cur, 'origem')
+                    linhas, col = consultas.consulta_padrao(cur, 'origem')
+                    utils.imprimir_tabelas(linhas, col)
 
-                    # Carrega em memória as origens cadastradas sem
-                    # imprimir na tela
-                    listagem = consultas.consulta_padrao_sem_imprimir(
-                        cur, 'origem')
-                    id_org = input(
-                        'Insira o id da origem que deseja alterar: ')
-                    if listagem:
-                        if id_org not in [str(linha[0]) for linha in listagem]:
+                    if linhas:
+                        id_org = input(
+                            'Insira o id da origem que deseja alterar: ')
+
+                        if id_org not in [str(linha[0]) for linha in linhas]:
                             print('ID informado não encontrado.')
                             input('Pressione ENTER para continuar...')
                         else:
                             os.system('cls')
-                            consultas.consulta_com_where(
+                            cons, col = consultas.consulta_com_where(
                                 cur, 'origem', 'id', id_org)
+                            utils.imprimir_tabelas(cons, col)
                             alterar.alterar_origem(cur, con, id_org)
                     else:
                         print('Nenhum registro encontrado.')
                         input('Pressione ENTER para continuar...')
-                case '6':
+                case '5':
                     # Chama a função de alteração de receitas cadastradas
                     # por período
                     os.system('cls')
@@ -369,29 +336,27 @@ while True:
 
                     # Consulta as receitas cadastradas no período informado
                     # e imprime na tela
-                    consultas.consulta_com_where(
+                    linhas, col = consultas.consulta_com_where(
                         cur, 'receitas', 'periodo_id', per)
+                    utils.imprimir_tabelas(linhas, col)
 
-                    # Carrega em memória as receitas cadastradas no período
-                    # informado sem imprimir na tela
-                    listagem = consultas.consulta_com_where_sem_imprimir(
-                        cur, '*', 'receitas', 'periodo_id', per)
-                    if listagem:
+                    if linhas:
                         rece = input(
                             'Informe o id da despesa que deseja alterar: ')
-                        if rece not in [str(linha[0]) for linha in listagem]:
+                        if rece not in [str(linha[0]) for linha in linhas]:
                             print('Id informado não encontrado.')
                             input('Pressione ENTER para continuar...')
                         else:
                             os.system('cls')
-                            consultas.consulta_com_where(
+                            cons, col = consultas.consulta_com_where(
                                 cur, 'receitas', 'id', rece)
+                            utils.imprimir_tabelas(cons, col)
                             alterar.alterar_receitas(con, cur, per, rece)
                     else:
                         print('Nenhum registro encontrado para o período'
                               ' informado.')
                         input('Pressione ENTER para continuar...')
-                case '7':
+                case '6':
                     # Chama a função de alteração de templates de receitas
                     # cadastradas
                     os.system('cls')
@@ -400,27 +365,27 @@ while True:
 
                     # Consulta os templates de receitas cadastradas e
                     # imprime na tela
-                    consultas.consulta_padrao(cur, 'rec_templates')
-
-                    # Carrega em memória os templates de receitas cadastradas
-                    # sem imprimir na tela
-                    listagem = consultas.consulta_padrao_sem_imprimir(
+                    linhas, col = consultas.consulta_padrao(
                         cur, 'rec_templates')
-                    id_tpl = input(
-                        'Insira o id do template que deseja alterar: ')
-                    if listagem:
-                        if id_tpl not in [str(linha[0]) for linha in listagem]:
+                    utils.imprimir_tabelas(linhas, col)
+
+                    if linhas:
+                        id_tpl = input(
+                            'Insira o id do template que deseja alterar: ')
+
+                        if id_tpl not in [str(linha[0]) for linha in linhas]:
                             print('ID informado não encontrado.')
                             input('Pressione ENTER para continuar...')
                         else:
                             os.system('cls')
-                            consultas.consulta_com_where(
+                            cons, col = consultas.consulta_com_where(
                                 cur, 'rec_templates', 'id', id_tpl)
+                            utils.imprimir_tabelas(cons, col)
                             alterar.alterar_rec_templates(con, cur, id_tpl)
                     else:
                         print('Nenhum registro encontrado.')
                         input('Pressione ENTER para continuar...')
-                case '8':
+                case '7':
                     # Retorna ao menu principal
                     continue
                 case _:

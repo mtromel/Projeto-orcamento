@@ -39,3 +39,35 @@ data_convertida = datetime.strptime(data_completa, '%d/%b/%y')
 data_formatada = data_convertida.strftime('%d/%m/%Y')
 
 print(data_completa, '>>>', data_convertida, '>>>', data_formatada)
+
+'''
+menu de alteração de grupos de planejamento removido temporariamente
+# Chama a função de alteração de grupos de planejamento
+# cadastrados
+os.system('cls')
+utils.print_cabecalho(
+    'LISTA DOS GRUPOS DE PLANEJAMENTO CADASTRADOS')
+
+# Consulta os grupos de planejamento cadastrados e imprime
+# na tela
+consultas.consulta_padrao(cur, 'planejamento')
+
+# Carrega em memória os grupos de planejamento cadastrados
+# sem imprimir na tela
+listagem = consultas.consulta_padrao_sem_imprimir(
+    cur, 'planejamento')
+grupo = input('Digite o id do grupo do planejamento que'
+                ' deseja alterar: ')
+if listagem:
+    if grupo not in [str(linha[0]) for linha in listagem]:
+        print('ID informado não encontrado.')
+        input('Pressione ENTER para continuar...')
+    else:
+        os.system('cls')
+        consultas.consulta_com_where(
+            cur, 'planejamento', 'id', grupo)
+        alterar.alterar_planejamento(cur, con, grupo)
+else:
+    print('Nenhum registro encontrado.')
+    input('Pressione ENTER para continuar...')
+'''

@@ -364,9 +364,9 @@ def cadastro_despesas():
                     print('Data inválida. Digite a data no formato DD/MM/AAAA')
 
             valor_in = input('Insira o valor da despesa: ').replace(',', '.')
+            valor = float(valor_in)
 
             while True:
-                valor = float(valor_in)
                 tipo_in = input('Informe "f" se a despesa é fixa ou "v" se é'
                                 ' variável: ').upper()
 
