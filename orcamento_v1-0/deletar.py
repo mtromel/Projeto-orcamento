@@ -10,7 +10,7 @@ def apagar_registro(con, cur, tabela):
 
 # Função para apagar TODOS os registros de uma tabela
 def apagar_todos_registros(con, cur, tabela):
-    confirm = input(f'Tem certeza que deseja apagar todos os registros de'
+    confirm = input(f'Tem certeza que deseja apagar TODOS os registros de'
                     f' {tabela}? Digite S para confirmar: ').upper()
     if confirm == 'S':
         cur.execute(f'DELETE FROM {tabela}')

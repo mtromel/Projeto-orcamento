@@ -232,7 +232,7 @@ while True:
                     linhas, col = consultas.consulta_com_where(
                         cur, 'despesas', 'periodo_id', per)
                     utils.imprimir_tabelas(linhas, col)
-                    
+
                     if linhas:
                         desp = input(
                             'Informe o id da despesa que deseja alterar: ')
@@ -260,7 +260,7 @@ while True:
                     if linhas:
                         id_cat = input(
                             'Insira o id da categoria que deseja alterar: ')
-                        
+
                         if id_cat not in [str(linha[0]) for linha in linhas]:
                             print('ID informado não encontrado.')
                             input('Pressione ENTER para continuar...')
@@ -404,12 +404,11 @@ while True:
             print('1 - APAGAR DESPESAS CADASTRADAS')
             print('2 - APAGAR PERÍODOS CADASTRADOS')
             print('3 - APAGAR CATEGORIAS CADASTRADAS')
-            print('4 - APAGAR GRUPOS DE PLANEJAMENTO CADASTRADOS')
-            print('5 - APAGAR DESPESAS FIXAS CADASTRADAS')
-            print('6 - APAGAR ORIGENS CADASTRADAS')
-            print('7 - APAGAR RECEITAS CADASTRADAS')
-            print('8 - APAGAR TEMPLATES DE RECEITAS CADASTRADAS')
-            print('9 - VOLTAR')
+            print('4 - APAGAR DESPESAS FIXAS CADASTRADAS')
+            print('5 - APAGAR ORIGENS CADASTRADAS')
+            print('6 - APAGAR RECEITAS CADASTRADAS')
+            print('7 - APAGAR TEMPLATES DE RECEITAS CADASTRADAS')
+            print('8 - VOLTAR')
             opcao_cad = input('SELECIONE A OPÇÃO DESEJADA: ')
             match opcao_cad:
                 case '1':
@@ -419,7 +418,8 @@ while True:
                     utils.print_cabecalho('LISTA DE DESPESAS')
 
                     # Consulta as despesas cadastradas e imprime na tela
-                    consultas.consulta_padrao(cur, 'despesas')
+                    linha, col = consultas.consulta_padrao(cur, 'despesas')
+                    utils.imprimir_tabelas(linha, col)
                     tipo = input('Deseja apagar um registro apenas? Digite'
                                  ' 1.\n'
                                  'Deseja apagar todos os registros da tabela?'
@@ -445,7 +445,9 @@ while True:
                     utils.print_cabecalho('LISTA DE PERÍODOS')
 
                     # Consulta os períodos cadastrados e imprime na tela
-                    consultas.consulta_padrao(cur, 'periodo')
+                    linha, col = consultas.consulta_padrao(cur, 'periodo')
+                    utils.imprimir_tabelas(linha, col)
+
                     tipo = input('Deseja apagar um registro apenas? Digite'
                                  ' 1.\n'
                                  'Deseja apagar todos os registros da tabela?'
@@ -464,7 +466,9 @@ while True:
                     utils.print_cabecalho('LISTA DE CATEGORIAS')
 
                     # Consulta as categorias cadastradas e imprime na tela
-                    consultas.consulta_padrao(cur, 'categorias')
+                    linha, col = consultas.consulta_padrao(cur, 'categorias')
+                    utils.imprimir_tabelas(linha, col)
+
                     tipo = input('Deseja apagar um registro apenas? Digite'
                                  ' 1.\n'
                                  'Deseja apagar todos os registros da tabela?'
@@ -478,35 +482,15 @@ while True:
                         input('Opção inválida, tente novamente. Pressione'
                               ' ENTER para continuar')
                 case '4':
-                    # Chama a função de exclusão apropriada para grupos de
-                    # planejamento cadastrados
-                    os.system('cls')
-                    utils.print_cabecalho('LISTA DE GRUPOS DE PLANEJAMENTO')
-
-                    # Consulta os grupos de planejamento cadastrados e imprime
-                    # na tela
-                    consultas.consulta_padrao(cur, 'planejamento')
-                    tipo = input('Deseja apagar um registro apenas? Digite'
-                                 ' 1.\n'
-                                 'Deseja apagar todos os registros da tabela?'
-                                 ' Digite 2. \n'
-                                 'SELECIONE A OPÇÃO DESEJADA: ')
-                    if tipo == '1':
-                        deletar.apagar_registro(con, cur, 'planejamento')
-                    elif tipo == '2':
-                        deletar.apagar_todos_registros(
-                            con, cur, 'planejamento')
-                    else:
-                        input('Opção inválida, tente novamente. Pressione'
-                              ' ENTER para continuar')
-                case '5':
                     # Chama a função de exclusão apropriada para despesas
                     # fixas cadastradas
                     os.system('cls')
                     utils.print_cabecalho('LISTA DE DESPESAS FIXAS')
 
                     # Consulta as despesas fixas cadastradas e imprime na tela
-                    consultas.consulta_padrao(cur, 'desp_fixa')
+                    linha, col = consultas.consulta_padrao(cur, 'desp_fixa')
+                    utils.imprimir_tabelas(linha, col)
+
                     tipo = input('Deseja apagar um registro apenas? Digite'
                                  ' 1.\n'
                                  'Deseja apagar todos os registros da tabela?'
@@ -519,14 +503,15 @@ while True:
                     else:
                         input('Opção inválida, tente novamente. Pressione'
                               ' ENTER para continuar')
-                case '6':
+                case '5':
                     # Chama a função de exclusão apropriada para origens
                     # cadastradas
                     os.system('cls')
                     utils.print_cabecalho('LISTA DE ORIGENS')
 
                     # Consulta as origens cadastradas e imprime na tela
-                    consultas.consulta_padrao(cur, 'origem')
+                    linha, col = consultas.consulta_padrao(cur, 'origem')
+                    utils.imprimir_tabelas(linha, col)
                     tipo = input('Deseja apagar um registro apenas? Digite'
                                  ' 1.\n'
                                  'Deseja apagar todos os registros da tabela?'
@@ -539,14 +524,16 @@ while True:
                     else:
                         input('Opção inválida, tente novamente. Pressione'
                               ' ENTER para continuar')
-                case '7':
+                case '6':
                     # Chama a função de exclusão apropriada para receitas
                     # cadastradas
                     os.system('cls')
                     utils.print_cabecalho('LISTA DE RECEITAS')
 
                     # Consulta as receitas cadastradas e imprime na tela
-                    consultas.consulta_padrao(cur, 'receitas')
+                    linha, col = consultas.consulta_padrao(cur, 'receitas')
+                    utils.imprimir_tabelas(linha, col)
+
                     tipo = input('Deseja apagar um registro apenas? Digite'
                                  ' 1.\n'
                                  'Deseja apagar todos os registros da tabela?'
@@ -565,7 +552,7 @@ while True:
                     else:
                         input('Opção inválida, tente novamente. Pressione'
                               ' ENTER para continuar')
-                case '8':
+                case '7':
                     # Chama a função de exclusão apropriada para templates de
                     # receitas cadastradas
                     os.system('cls')
@@ -573,7 +560,10 @@ while True:
 
                     # Consulta os templates de receitas cadastradas e imprime
                     # na tela
-                    consultas.consulta_padrao(cur, 'rec_templates')
+                    linha, col = consultas.consulta_padrao(
+                        cur, 'rec_templates')
+                    utils.imprimir_tabelas(linha, col)
+
                     tipo = input('Deseja apagar um registro apenas? Digite'
                                  ' 1.\n'
                                  'Deseja apagar todos os registros da tabela?'
@@ -587,7 +577,7 @@ while True:
                     else:
                         input('Opção inválida, tente novamente. Pressione'
                               ' ENTER para continuar')
-                case '9':
+                case '8':
                     # Retorna ao menu principal
                     continue
                 case _:
@@ -624,15 +614,15 @@ while True:
                         cur, 'categoria_id', 'valor', 'despesas', per)
 
                     # Carrega em memória as categorias
-                    categorias = consultas.consulta_padrao_sem_imprimir(
+                    categorias, _ = consultas.consulta_padrao(
                         cur, 'categorias')
 
                     # Carrega em memória a descrição do período informado
-                    periodo = consultas.consulta_com_where_sem_imprimir(
-                        cur, 'periodo', 'periodo', 'id', per)
+                    periodo, _ = consultas.consulta_com_where(
+                        cur, 'periodo', 'id', per)
                     print()
                     print('-' * 40)
-                    print(f'Despesas do período {per} - {periodo[0][0]}')
+                    print(f'Despesas do período {per} - {periodo[0][1]}')
                     print()
                     for linha in resultado:
                         print(f'{categorias[int(linha[0]) - 1][1]}:'
@@ -657,15 +647,15 @@ while True:
                         cur, 'grupo_id', 'valor', 'despesas', per)
 
                     # Carrega em memória os grupos de planejamento
-                    categorias = consultas.consulta_padrao_sem_imprimir(
+                    categorias, _ = consultas.consulta_padrao(
                         cur, 'planejamento')
 
                     # Carrega em memória a descrição do período informado
-                    periodo = consultas.consulta_com_where_sem_imprimir(
-                        cur, 'periodo', 'periodo', 'id', per)
+                    periodo, _ = consultas.consulta_com_where(
+                        cur, 'periodo', 'id', per)
                     print()
                     print('-' * 40)
-                    print(f'Despesas do período {per} - {periodo[0][0]}')
+                    print(f'Despesas do período {per} - {periodo[0][1]}')
                     print()
                     for linha in resultado:
                         if linha[0] == '':
@@ -698,16 +688,16 @@ while True:
                         cur, 'categoria_id', 'valor', 'despesas', per)
 
                     # Carrega em memória os grupos de planejamento
-                    categorias = consultas.consulta_padrao_sem_imprimir(
-                        cur, 'planejamento')
+                    categorias, _ = consultas.consulta_padrao(cur,
+                                                              'planejamento')
 
                     # Carrega em memória as categorias
-                    categorias2 = consultas.consulta_padrao_sem_imprimir(
-                        cur, 'categorias')
+                    categorias2, _ = consultas.consulta_padrao(cur,
+                                                               'categorias')
 
                     # Carrega em memória a descrição do período informado
-                    periodo = consultas.consulta_com_where_sem_imprimir(
-                        cur, 'periodo', 'periodo', 'id', per)
+                    periodo, _ = consultas.consulta_com_where(cur, 'periodo',
+                                                              'id', per)
 
                     # Carrega em memória o valor total de receitas do período
                     # informado
@@ -716,7 +706,7 @@ while True:
 
                     print('-' * 40)
                     print(f'Orçamento mensal do período {per} -'
-                          f' {periodo[0][0]}')
+                          f' {periodo[0][1]}')
                     print()
                     print('-' * 20)
                     print(f'Receitas: R$ {receitas:.2f}')
@@ -795,15 +785,14 @@ while True:
                         cur, 'origem_id', 'valor', 'despesas', per)
 
                     # Carrega em memória as origens cadastradas
-                    categorias = consultas.consulta_padrao_sem_imprimir(
-                        cur, 'origem')
+                    categorias, _ = consultas.consulta_padrao(cur, 'origem')
 
                     # Carrega em memória a descrição do período informado
-                    periodo = consultas.consulta_com_where_sem_imprimir(
-                        cur, 'periodo', 'periodo', 'id', per)
+                    periodo, _ = consultas.consulta_com_where(cur, 'periodo',
+                                                              'id', per)
                     print()
                     print('-' * 40)
-                    print(f'Despesas do período {per} - {periodo[0][0]}')
+                    print(f'Despesas do período {per} - {periodo[0][1]}')
                     print()
                     for linha in resultado:
                         if linha[0] == '':

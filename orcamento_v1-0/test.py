@@ -71,3 +71,29 @@ else:
     print('Nenhum registro encontrado.')
     input('Pressione ENTER para continuar...')
 '''
+'''
+menu de exclusão de grupos de planejamento removido temporariamente
+# Chama a função de exclusão apropriada para grupos de
+# planejamento cadastrados
+os.system('cls')
+utils.print_cabecalho('LISTA DE GRUPOS DE PLANEJAMENTO')
+
+# Consulta os grupos de planejamento cadastrados e imprime
+# na tela
+linha, col = consultas.consulta_padrao(cur, 'planejamento')
+utils.imprimir_tabelas(linha, col)
+
+tipo = input('Deseja apagar um registro apenas? Digite'
+                ' 1.\n'
+                'Deseja apagar todos os registros da tabela?'
+                ' Digite 2. \n'
+                'SELECIONE A OPÇÃO DESEJADA: ')
+if tipo == '1':
+    deletar.apagar_registro(con, cur, 'planejamento')
+elif tipo == '2':
+    deletar.apagar_todos_registros(
+        con, cur, 'planejamento')
+else:
+    input('Opção inválida, tente novamente. Pressione'
+            ' ENTER para continuar')
+'''
