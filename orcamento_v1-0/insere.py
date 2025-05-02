@@ -313,29 +313,37 @@ def cadastro_despesas():
         utils.print_cabecalho(cabecalho)
         cons_desp, _ = consultas.consulta_com_where(cur, 'despesas',
                                                     'periodo_id', per)
+        per_completo = periodo[int(per) - 1][1]
+        per_int = int(per)
 
         if not cons_desp:
             desp_fixa_input = input('Ainda não há despesas cadastradas para'
                                     ' este período. Deseja importar as'
                                     ' despesas fixas cadastradas? Digite S'
                                     ' para Sim e N para Não: ').upper()
-            per_completo = periodo[int(per) - 1][1]
-            per_int = int(per)
             if desp_fixa_input == 'S':
-                desp_fixas, _ = consultas.consulta_padrao(cur, 'desp_fixa')
-                for linha in desp_fixas:
-                    data_completa = (str(linha[2]) + '/' + per_completo)
-                    data_convertida = datetime.strptime(data_completa,
-                                                        '%d/%b/%y')
-                    data_formatada = data_convertida.strftime('%d/%m/%Y')
-                    cur.execute("INSERT INTO despesas (desc_loja, data, valor,"
-                                " categoria_id, grupo_id, tipo, origem_id,"
-                                " periodo_id) VALUES (?, ?, ?, ?, ?, 'FIXA',"
-                                " ?, ?)", (linha[1], data_formatada, linha[4],
-                                           linha[3], linha[5], linha[6],
-                                           per_int))
-                con.commit()
+                adiciona_desp_fixa_no_periodo(cur, per_completo, per_int)
+        else:
+            existe_fixa = False
+            for linha in cons_desp:
+                if linha[9] == 'FIXA':
+                    existe_fixa = True
+                    break
+            if not existe_fixa:
+                print('Despesas já cadastradas para este período:')
+                linhas, col = consultas.consulta_padrao_com_inner_where(
+                    cur, 'despesas', 'periodo_id', per)
+                utils.imprimir_tabelas(linhas, col)
+                print()
+                desp_fixa_input = input(
+                    'Ainda não há despesas fixas cadastradas para este'
+                    ' período. Deseja importar as despesas fixas cadastradas?'
+                    ' Digite S para Sim e N para Não: ').upper()
 
+                if desp_fixa_input == 'S':
+                    adiciona_desp_fixa_no_periodo(cur, per_completo, per_int)
+
+        print()
         print('Despesas já cadastradas para este período:')
         linhas, col = consultas.consulta_padrao_com_inner_where(cur,
                                                                 'despesas',
@@ -452,3 +460,21 @@ def cadastro_despesas():
         else:
             print()
             break
+
+
+def adiciona_desp_fixa_no_periodo(cur, per_completo, per_int):
+    desp_fixas, _ = consultas.consulta_padrao(cur, 'desp_fixa')
+    for linha in desp_fixas:
+        data_completa = (str(linha[2]) + '/' + per_completo)
+        data_convertida = datetime.strptime(data_completa,
+                                            '%d/%b/%y')
+        data_formatada = data_convertida.strftime('%d/%m/%Y')
+        cur.execute("INSERT INTO despesas (desc_loja, data, valor,"
+                    " categoria_id, grupo_id, tipo, origem_id,"
+                    " periodo_id) VALUES (?, ?, ?, ?, ?, 'FIXA',"
+                    " ?, ?)", (linha[1], data_formatada, linha[4], linha[3],
+                               linha[5], linha[6], per_int))
+    con.commit()
+    print()
+    print('Despesas fixas inseridas com sucesso no período ', per_completo)
+    print()
