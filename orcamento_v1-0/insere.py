@@ -345,10 +345,8 @@ def cadastro_despesas():
 
         print()
         print('Despesas já cadastradas para este período:')
-        linhas, col = consultas.consulta_padrao_com_inner_where(cur,
-                                                                'despesas',
-                                                                'periodo_id',
-                                                                per)
+        linhas, col = consultas.consulta_padrao_com_inner_where(
+            cur, 'despesas', 'periodo_id', per)
         utils.imprimir_tabelas(linhas, col)
         print()
         confirm = input('Deseja cadastrar uma nova despesa? Digite S para Sim'
@@ -371,8 +369,20 @@ def cadastro_despesas():
                     print()
                     print('Data inválida. Digite a data no formato DD/MM/AAAA')
 
-            valor_in = input('Insira o valor da despesa: ').replace(',', '.')
-            valor = float(valor_in)
+            while True:
+                valor_in = input('Insira o valor da despesa: ').replace(',',
+                                                                        '.')
+
+                try:
+                    if valor_in:
+                        valor = float(valor_in)
+                        break
+                    else:
+                        print('Valor inválido. Insira um valor válido')
+                        continue
+                except ValueError:
+                    print('Valor inválido. Insira um valor válido')
+                    continue
 
             while True:
                 tipo_in = input('Informe "f" se a despesa é fixa ou "v" se é'
@@ -388,21 +398,57 @@ def cadastro_despesas():
                     input('Opção inválida. Tecle ENTER para tentar novamente')
                     continue
 
-            num_parc = input(
-                'Informe o número de parcelas (zero para despesa única): ')
+            while True:
+                num_parc = input(
+                    'Informe o número de parcelas (zero para despesa única): ')
+                try:
+                    num_parc_int = int(num_parc)
+                    if num_parc_int >= 0:
+                        break
+                except ValueError:
+                    print('Número inválido. Insira um número inteiro positivo')
+                    continue
+
             print('-----------------------------------------------')
             linhas, col = consultas.consulta_padrao(cur, 'categorias')
             utils.imprimir_tabelas(linhas, col)
-            categ = input('Selecione uma das categorias listadas acima: ')
+
+            while True:
+                categ = input('Selecione uma das categorias listadas acima: ')
+                if categ.isdigit() and int(categ) in [linha[0] for linha in
+                                                      linhas]:
+                    break
+                else:
+                    print('Opção inválida. Selecione uma categoria válida')
+                    continue
+
             print('-----------------------------------------------')
             linhas, col = consultas.consulta_padrao(cur, 'planejamento')
             utils.imprimir_tabelas(linhas, col)
-            grp_plan = input(
-                'Selecione um dos grupos de planejamento listados acima: ')
+
+            while True:
+                grp_plan = input(
+                    'Selecione um dos grupos de planejamento listados acima: ')
+                if grp_plan.isdigit() and int(grp_plan) in [linha[0] for linha
+                                                            in linhas]:
+                    break
+                else:
+                    print('Opção inválida. Selecione um grupo de planejamento'
+                          ' válido')
+                    continue
+
             print('-----------------------------------------------')
             linhas, col = consultas.consulta_padrao(cur, 'origem')
             utils.imprimir_tabelas(linhas, col)
-            org_desp = input('Selecione uma das origens listadas acima: ')
+
+            while True:
+                org_desp = input('Selecione uma das origens listadas acima: ')
+                if org_desp.isdigit() and int(org_desp) in [linha[0] for linha
+                                                            in linhas]:
+                    break
+                else:
+                    print('Opção inválida. Selecione uma origem válida')
+                    continue
 
             if num_parc == '0':
                 num_parc_atual = num_parc
