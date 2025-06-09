@@ -1,7 +1,7 @@
 # import sys
 from pathlib import Path
 from prettytable import PrettyTable
-from datetime import datetime
+# from datetime import datetime
 
 import utils
 
@@ -29,16 +29,16 @@ def imprimir_teste(nomes_colunas, linhas_despesas):
     print(tabela)
 
 
-name_col, line_table = consulta_teste(cur, '*', 'periodo', 'periodo', '25')
-imprimir_teste(name_col, line_table)
-per = '3'
-per_completo = line_table[int(per) - 1][1]
+# name_col, line_table = consulta_teste(cur, '*', 'periodo', 'periodo', '25')
+# imprimir_teste(name_col, line_table)
+# per = '3'
+# per_completo = line_table[int(per) - 1][1]
 
-data_completa = ('8' + '/' + per_completo)
-data_convertida = datetime.strptime(data_completa, '%d/%b/%y')
-data_formatada = data_convertida.strftime('%d/%m/%Y')
+# data_completa = ('8' + '/' + per_completo)
+# data_convertida = datetime.strptime(data_completa, '%d/%b/%y')
+# data_formatada = data_convertida.strftime('%d/%m/%Y')
 
-print(data_completa, '>>>', data_convertida, '>>>', data_formatada)
+# print(data_completa, '>>>', data_convertida, '>>>', data_formatada)
 
 '''
 menu de alteração de grupos de planejamento removido temporariamente
@@ -97,3 +97,23 @@ else:
     input('Opção inválida, tente novamente. Pressione'
             ' ENTER para continuar')
 '''
+
+
+def input_com_placeholder(mensagem, placeholder):
+    texto = (mensagem + ": " + placeholder + " \n Pressione ENTER para usar o"
+             " atual. Ou digite um novo: ")
+    entrada = input(texto)
+    if entrada == "":
+        return placeholder
+    else:
+        return entrada
+
+
+# Exemplo de utilização
+nome_bd = 'Marcos'
+idade_bd = '45'
+nome = input_com_placeholder("O valor atual desse campo é", nome_bd)
+print(f"O nome é: {nome}")
+
+idade = input_com_placeholder("Digite a sua idade", idade_bd)
+print(f"A idade é: {idade}")

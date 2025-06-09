@@ -244,7 +244,8 @@ while True:
                             cons, col = consultas.consulta_com_where(
                                 cur, 'despesas', 'id', desp)
                             utils.imprimir_tabelas(cons, col)
-                            alterar.alterar_despesa(con, cur, per, desp)
+                            alterar.alterar_despesa(
+                                con, cur, per, desp, cons)  # type: ignore
                     else:
                         print('Nenhum registro encontrado para o período'
                               ' informado.')
@@ -269,7 +270,10 @@ while True:
                             cons, col = consultas.consulta_com_where(
                                 cur, 'categorias', 'id', id_cat)
                             utils.imprimir_tabelas(cons, col)
-                            alterar.alterar_categoria(cur, con, id_cat)
+
+                            nome_bd = cons[0][1]  # type: ignore
+                            alterar.alterar_categoria(
+                                cur, con, id_cat, nome_bd)
                     else:
                         print('Nenhum registro encontrado.')
                         input('Pressione ENTER para continuar...')
@@ -296,7 +300,9 @@ while True:
                             cons, col = consultas.consulta_com_where(
                                 cur, 'desp_fixa', 'id', id_desp_fixa)
                             utils.imprimir_tabelas(cons, col)
-                            alterar.alterar_desp_fixa(cur, con, id_desp_fixa)
+
+                            alterar.alterar_desp_fixa(
+                                cur, con, id_desp_fixa, cons)  # type: ignore
                     else:
                         print('Nenhum registro encontrado.')
                         input('Pressione ENTER para continuar...')
@@ -321,7 +327,10 @@ while True:
                             cons, col = consultas.consulta_com_where(
                                 cur, 'origem', 'id', id_org)
                             utils.imprimir_tabelas(cons, col)
-                            alterar.alterar_origem(cur, con, id_org)
+
+                            nome_bd = cons[0][1]  # type: ignore
+
+                            alterar.alterar_origem(cur, con, id_org, nome_bd)
                     else:
                         print('Nenhum registro encontrado.')
                         input('Pressione ENTER para continuar...')
@@ -351,7 +360,14 @@ while True:
                             cons, col = consultas.consulta_com_where(
                                 cur, 'receitas', 'id', rece)
                             utils.imprimir_tabelas(cons, col)
-                            alterar.alterar_receitas(con, cur, per, rece)
+
+                            desc_bd = cons[0][1]  # type: ignore
+                            data_bd = cons[0][2]  # type: ignore
+                            valor_bd = cons[0][3]  # type: ignore
+
+                            alterar.alterar_receitas(con, cur, per, rece,
+                                                     desc_bd, data_bd,
+                                                     valor_bd)
                     else:
                         print('Nenhum registro encontrado para o período'
                               ' informado.')
@@ -381,7 +397,13 @@ while True:
                             cons, col = consultas.consulta_com_where(
                                 cur, 'rec_templates', 'id', id_tpl)
                             utils.imprimir_tabelas(cons, col)
-                            alterar.alterar_rec_templates(con, cur, id_tpl)
+
+                            desc_bd = cons[0][1]  # type: ignore
+                            valor_bd = cons[0][2]  # type: ignore
+                            data_bd = cons[0][3]  # type: ignore
+
+                            alterar.alterar_rec_templates(
+                                con, cur, id_tpl, desc_bd, valor_bd, data_bd)
                     else:
                         print('Nenhum registro encontrado.')
                         input('Pressione ENTER para continuar...')

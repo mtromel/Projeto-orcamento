@@ -1,5 +1,6 @@
 from datetime import datetime
 import locale
+import utils
 
 
 locale.setlocale(locale.LC_ALL, 'pt_BR.UTF-8')
@@ -7,11 +8,30 @@ cabecalho_padrao = 'ALTERAÇÃO DE LANÇAMENTO DE '
 
 
 # Função para alterar um registro da tabela despesas
-def alterar_despesa(con, cur, per, id_desp):
-    desc_lj = input('Insira o nome da despesa: ')
-    desc_desp = input('Insira uma descrição para a despesa: ')
+def alterar_despesa(con, cur, per, id_desp, cons: list):
+    desc_lj_bd = cons[0][1]
+    desc_desp_bd = cons[0][2]
+    data_bd = cons[0][3]
+    data_bd_str = str(data_bd)
+    valor_bd = cons[0][4]
+    valor_bd_str = str(valor_bd)
+    categ_bd = cons[0][5]
+    categ_bd_str = str(categ_bd)
+    num_parc_bd = cons[0][7]
+    num_parc_bd_str = str(num_parc_bd)
+    grp_plan_bd = cons[0][8]
+    grp_plan_bd_str = str(grp_plan_bd)
+    tipo_bd = cons[0][9]
+    org_desp_bd = cons[0][10]
+    org_desp_bd_str = str(org_desp_bd)
+
+    desc_lj = utils.input_com_placeholder(
+        'O atual nome da despesa é', desc_lj_bd)
+    desc_desp = utils.input_com_placeholder(
+        'A atual descrição da despesa é', desc_desp_bd)
     while True:
-        data = input('Insira a data da despesa no formato DD/MM/AAAA: ')
+        data = utils.input_com_placeholder(
+            'A atual data da despesa é', data_bd_str)
 
         try:
             data_convertida = datetime.strptime(data, '%d/%m/%Y')
@@ -21,17 +41,23 @@ def alterar_despesa(con, cur, per, id_desp):
             print()
             print('Data inválida. Digite a data no formato DD/MM/AAAA')
 
-    valor = input('Insira o valor da despesa: ')
-    categ = input('Informe o id da categoria: ')
-    num_parc = input(
-        'Informe o número de parcelas (zero para despesa única): ')
-    grp_plan = input('Informe o id do grupo de planejamento: ')
+    valor = utils.input_com_placeholder(
+        'O atual valor da despesa é', valor_bd_str)
+    categ = utils.input_com_placeholder(
+        'A atual categoria é', categ_bd_str)
+    num_parc = utils.input_com_placeholder(
+        'O número atual de parcelas é', num_parc_bd_str)
+    grp_plan = utils.input_com_placeholder(
+        'O atual grupo de planejamento é', grp_plan_bd_str)
 
     while True:
-        tipo_in = input('Informe "f" se a despesa é fixa ou "v" se é'
-                        ' variável: ').upper()
+        tipo_in = utils.input_com_placeholder(
+            'O tipo de despesa atual é', tipo_bd)
 
-        if tipo_in == 'F':
+        if tipo_in == tipo_bd:
+            tipo = tipo_bd
+            break
+        elif tipo_in == 'F':
             tipo = 'FIXA'
             break
         elif tipo_in == 'V':
@@ -41,7 +67,8 @@ def alterar_despesa(con, cur, per, id_desp):
             input('Opção inválida. Tecle ENTER para tentar novamente')
             continue
 
-    org_desp = input('Informe o id da origem: ')
+    org_desp = utils.input_com_placeholder(
+        'O atual id da origem é', org_desp_bd_str)
 
     if num_parc == '0':
         num_parc_atual = num_parc
@@ -88,13 +115,50 @@ def alterar_despesa(con, cur, per, id_desp):
 
 
 # Função para alterar um registro da tabela categorias
-def alterar_categoria(cur, con, id_cat):
-    nome = input('Insira o novo nome da categoria: ')
+def alterar_categoria(cur, con, id_cat, nome_bd):
+    nome = utils.input_com_placeholder(
+        'O atual nome da categoria é', nome_bd)
     cur.execute("UPDATE categorias SET categoria = ? WHERE id = ?", (
         nome, id_cat))
     print()
     con.commit()
     print('Categoria alterada com sucesso')
+    input('Pressione ENTER para continuar...')
+
+
+# Função para alterar um registro da tabela desp_fixa
+def alterar_desp_fixa(cur, con, id_desp_fixa, cons: list):
+
+    desc_bd = cons[0][1]
+    dia_bd = cons[0][2]
+    dia_bd_str = str(dia_bd)
+    cat_bd = cons[0][3]
+    cat_bd_str = str(cat_bd)
+    valor_bd = cons[0][4]
+    valor_bd_str = str(valor_bd)
+    grp_bd = cons[0][5]
+    grp_bd_str = str(grp_bd)
+    origem_bd = cons[0][6]
+    origem_bd_str = str(origem_bd)
+
+    desc = utils.input_com_placeholder(
+        'A atual descrição da despesa é', desc_bd)
+    dia = utils.input_com_placeholder(
+        'O atual dia fixo de vencimento é', dia_bd_str)
+    categoria = utils.input_com_placeholder(
+        'O atual número da categoria é', cat_bd_str)
+    valor = utils.input_com_placeholder(
+        'O atual valor da despesa é', valor_bd_str)
+    grupo = utils.input_com_placeholder(
+        'O atual grupo de planejamento é', grp_bd_str)
+    origem = utils.input_com_placeholder(
+        'A atual origem é', origem_bd_str)
+
+    cur.execute('UPDATE desp_fixa SET descricao = ?, dia = ?, valor = ?,'
+                ' categoria_id = ?, grupo_id = ?, origem_id = ? WHERE id = ?',
+                (desc, dia, valor, categoria, grupo, origem, id_desp_fixa))
+    con.commit()
+    print('Despesa fixa alterada com sucesso')
     input('Pressione ENTER para continuar...')
 
 
@@ -109,26 +173,10 @@ def alterar_planejamento(cur, con, id_gr_plan):
     input('Pressione ENTER para continuar...')
 
 
-# Função para alterar um registro da tabela desp_fixa
-def alterar_desp_fixa(cur, con, id_desp_fixa):
-    desc = input('Insira a descrição da despesa: ')
-    dia = int(input('Insira o dia fixo de vencimento: '))
-    categoria = int(input('Insira o número da categoria: '))
-    valor = float(input('Insira o valor fixo da despesa: '))
-    grupo = int(input('Insira o número do grupo de planejamento: '))
-    origem = int(input('Insira o número da origem: '))
-
-    cur.execute('UPDATE desp_fixa SET descricao = ?, dia = ?, valor = ?,'
-                ' categoria_id = ?, grupo_id = ?, origem_id = ? WHERE id = ?',
-                (desc, dia, valor, categoria, grupo, origem, id_desp_fixa))
-    con.commit()
-    print('Despesa fixa alterada com sucesso')
-    input('Pressione ENTER para continuar...')
-
-
 # Função para alterar um registro da tabela origem
-def alterar_origem(cur, con, id_org):
-    nome = input('Insira o novo nome da origem: ')
+def alterar_origem(cur, con, id_org, nome_bd):
+    nome = utils.input_com_placeholder(
+        'O atual nome da origem é', nome_bd)
     cur.execute("UPDATE origem SET origem = ? WHERE id = ?", (
         nome, id_org))
     print()
@@ -138,10 +186,15 @@ def alterar_origem(cur, con, id_org):
 
 
 # Função para alterar um registro da tabela receitas
-def alterar_receitas(con, cur, per, id_rece):
-    desc = input('Insira a descrição da receita: ')
-    data = int(input('Insira o dia da receita: '))
-    valor = float(input('Insira o valor da receita: '))
+def alterar_receitas(con, cur, per, id_rece, desc_bd, data_bd, valor_bd):
+    desc = utils.input_com_placeholder(
+        'A atual descrição da receita é', desc_bd)
+    data_bd_str = str(data_bd)
+    data = utils.input_com_placeholder(
+        'O dia atual da receita é', data_bd_str)
+    valor_bd_str = str(valor_bd)
+    valor = utils.input_com_placeholder(
+        'O valor atual da receita é', valor_bd_str)
 
     cur.execute("UPDATE receitas SET descricao = ?, data = ?, valor = ?,"
                 " periodo_id = ? WHERE id = ?", (desc, data, valor, per,
@@ -153,11 +206,15 @@ def alterar_receitas(con, cur, per, id_rece):
 
 
 # Função para alterar um registro da tabela rec_templates
-def alterar_rec_templates(con, cur, id_tpl):
-    desc = input('Insira a descrição da receita: ')
-    valor = float(input('Insira o valor da receita: '))
-    data = int(input('Insira o dia da receita: '))
-
+def alterar_rec_templates(
+        con, cur, id_tpl, desc_bd, valor_bd, data_bd):
+    desc = utils.input_com_placeholder(
+        'A atual descrição da receita é', desc_bd)
+    valor_bd_str = str(valor_bd)
+    valor = utils.input_com_placeholder(
+        'O valor atual da receita é', valor_bd_str)
+    data_bd_str = str(data_bd)
+    data = utils.input_com_placeholder('O dia atual da receita é', data_bd_str)
     cur.execute("UPDATE rec_templates SET descricao = ?, data = ?, valor = ?"
                 " WHERE id = ?", (desc, data, valor, id_tpl))
     print()
