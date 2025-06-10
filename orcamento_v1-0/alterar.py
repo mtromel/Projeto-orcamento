@@ -186,13 +186,17 @@ def alterar_origem(cur, con, id_org, nome_bd):
 
 
 # Função para alterar um registro da tabela receitas
-def alterar_receitas(con, cur, per, id_rece, desc_bd, data_bd, valor_bd):
+def alterar_receitas(con, cur, per, id_rece, cons: list):
+    desc_bd = cons[0][1]
+    data_bd = cons[0][2]
+    data_bd_str = str(data_bd)
+    valor_bd = cons[0][3]
+    valor_bd_str = str(valor_bd)
+
     desc = utils.input_com_placeholder(
         'A atual descrição da receita é', desc_bd)
-    data_bd_str = str(data_bd)
     data = utils.input_com_placeholder(
         'O dia atual da receita é', data_bd_str)
-    valor_bd_str = str(valor_bd)
     valor = utils.input_com_placeholder(
         'O valor atual da receita é', valor_bd_str)
 
@@ -207,13 +211,17 @@ def alterar_receitas(con, cur, per, id_rece, desc_bd, data_bd, valor_bd):
 
 # Função para alterar um registro da tabela rec_templates
 def alterar_rec_templates(
-        con, cur, id_tpl, desc_bd, valor_bd, data_bd):
+        con, cur, id_tpl, cons: list):
+    desc_bd = cons[0][1]
+    valor_bd = cons[0][2]
+    valor_bd_str = str(valor_bd)
+    data_bd = cons[0][3]
+    data_bd_str = str(data_bd)
+
     desc = utils.input_com_placeholder(
         'A atual descrição da receita é', desc_bd)
-    valor_bd_str = str(valor_bd)
     valor = utils.input_com_placeholder(
         'O valor atual da receita é', valor_bd_str)
-    data_bd_str = str(data_bd)
     data = utils.input_com_placeholder('O dia atual da receita é', data_bd_str)
     cur.execute("UPDATE rec_templates SET descricao = ?, data = ?, valor = ?"
                 " WHERE id = ?", (desc, data, valor, id_tpl))

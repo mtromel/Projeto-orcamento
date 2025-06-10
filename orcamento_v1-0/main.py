@@ -361,13 +361,8 @@ while True:
                                 cur, 'receitas', 'id', rece)
                             utils.imprimir_tabelas(cons, col)
 
-                            desc_bd = cons[0][1]  # type: ignore
-                            data_bd = cons[0][2]  # type: ignore
-                            valor_bd = cons[0][3]  # type: ignore
-
                             alterar.alterar_receitas(con, cur, per, rece,
-                                                     desc_bd, data_bd,
-                                                     valor_bd)
+                                                     cons)  # type: ignore
                     else:
                         print('Nenhum registro encontrado para o período'
                               ' informado.')
@@ -398,12 +393,8 @@ while True:
                                 cur, 'rec_templates', 'id', id_tpl)
                             utils.imprimir_tabelas(cons, col)
 
-                            desc_bd = cons[0][1]  # type: ignore
-                            valor_bd = cons[0][2]  # type: ignore
-                            data_bd = cons[0][3]  # type: ignore
-
                             alterar.alterar_rec_templates(
-                                con, cur, id_tpl, desc_bd, valor_bd, data_bd)
+                                con, cur, id_tpl, cons)  # type: ignore
                     else:
                         print('Nenhum registro encontrado.')
                         input('Pressione ENTER para continuar...')
