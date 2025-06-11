@@ -40,7 +40,7 @@ def imprimir_tabelas(linhas_despesas, nomes_colunas):
 
 
 # Função para usar placeholder nas alterações de dados
-def input_com_placeholder(mensagem, placeholder):
+def input_com_placeholder(mensagem: str, placeholder: str):
     texto = (mensagem + ": " + placeholder + " \n Pressione ENTER para usar o"
              " valor padrão. Ou digite um novo valor: ")
     entrada = input(texto)

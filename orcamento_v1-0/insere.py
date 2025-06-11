@@ -515,11 +515,12 @@ def adiciona_desp_fixa_no_periodo(cur, per_completo, per_int):
         data_convertida = datetime.strptime(data_completa,
                                             '%d/%b/%y')
         data_formatada = data_convertida.strftime('%d/%m/%Y')
-        cur.execute("INSERT INTO despesas (desc_loja, data, valor,"
-                    " categoria_id, grupo_id, tipo, origem_id,"
-                    " periodo_id) VALUES (?, ?, ?, ?, ?, 'FIXA',"
-                    " ?, ?)", (linha[1], data_formatada, linha[4], linha[3],
-                               linha[5], linha[6], per_int))
+        cur.execute("INSERT INTO despesas (desc_loja, desc_desp, data, valor,"
+                    " categoria_id, parcela_atual, parcelas_total, grupo_id,"
+                    " tipo, origem_id, periodo_id) VALUES (?, '', ?, ?, ?, 0,"
+                    " 0, ?, 'FIXA', ?, ?)", (linha[1], data_formatada,
+                                             linha[4], linha[3], linha[5],
+                                             linha[6], per_int))
     con.commit()
     print()
     print('Despesas fixas inseridas com sucesso no período ', per_completo)

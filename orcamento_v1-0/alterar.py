@@ -27,6 +27,8 @@ def alterar_despesa(con, cur, per, id_desp, cons: list):
 
     desc_lj = utils.input_com_placeholder(
         'O atual nome da despesa é', desc_lj_bd)
+    if desc_desp_bd is None:
+        desc_desp_bd = ''
     desc_desp = utils.input_com_placeholder(
         'A atual descrição da despesa é', desc_desp_bd)
     while True:
@@ -40,9 +42,21 @@ def alterar_despesa(con, cur, per, id_desp, cons: list):
         except ValueError:
             print()
             print('Data inválida. Digite a data no formato DD/MM/AAAA')
+    while True:
+        valor_in = utils.input_com_placeholder(
+            'O atual valor da despesa é', valor_bd_str)
 
-    valor = utils.input_com_placeholder(
-        'O atual valor da despesa é', valor_bd_str)
+        try:
+            if valor_in:
+                valor = float(valor_in)
+                break
+            else:
+                print('Valor inválido. Insira um valor válido')
+                continue
+        except ValueError:
+            print('Valor inválido. Insira um valor válido')
+            continue
+
     categ = utils.input_com_placeholder(
         'A atual categoria é', categ_bd_str)
     num_parc = utils.input_com_placeholder(
