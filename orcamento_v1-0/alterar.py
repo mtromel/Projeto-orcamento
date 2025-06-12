@@ -44,7 +44,7 @@ def alterar_despesa(con, cur, per, id_desp, cons: list):
             print('Data inválida. Digite a data no formato DD/MM/AAAA')
     while True:
         valor_in = utils.input_com_placeholder(
-            'O atual valor da despesa é', valor_bd_str)
+            'O atual valor da despesa é', valor_bd_str).replace(',', '.')
 
         try:
             if valor_in:
@@ -180,8 +180,22 @@ def alterar_desp_fixa(cur, con, id_desp_fixa, cons: list):
         'O atual dia fixo de vencimento é', dia_bd_str)
     categoria = utils.input_com_placeholder(
         'O atual número da categoria é', cat_bd_str)
-    valor = utils.input_com_placeholder(
-        'O atual valor da despesa é', valor_bd_str)
+
+    while True:
+        valor_in = utils.input_com_placeholder(
+            'O atual valor da despesa é', valor_bd_str).replace(',', '.')
+
+        try:
+            if valor_in:
+                valor = float(valor_in)
+                break
+            else:
+                print('Valor inválido. Insira um valor válido')
+                continue
+        except ValueError:
+            print('Valor inválido. Insira um valor válido')
+            continue
+
     grupo = utils.input_com_placeholder(
         'O atual grupo de planejamento é', grp_bd_str)
     origem = utils.input_com_placeholder(
