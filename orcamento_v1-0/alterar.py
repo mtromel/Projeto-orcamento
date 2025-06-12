@@ -136,7 +136,6 @@ def alterar_categoria(cur, con, id_cat, nome_bd, cons):
 
     if nome != nome_bd:
         for linha in cons:
-            i = 0
             categoria = linha[1]
 
             if nome == categoria:
@@ -146,7 +145,6 @@ def alterar_categoria(cur, con, id_cat, nome_bd, cons):
                 input('Pressione ENTER para continuar...')
                 duplicado = True
                 break
-            i += 1
 
     if not duplicado:
         cur.execute("UPDATE categorias SET categoria = ? WHERE id = ?", (
@@ -221,15 +219,30 @@ def alterar_planejamento(cur, con, id_gr_plan):
 
 
 # Função para alterar um registro da tabela origem
-def alterar_origem(cur, con, id_org, nome_bd):
+def alterar_origem(cur, con, id_org, nome_bd, cons):
+    duplicado = False
     nome = utils.input_com_placeholder(
         'O atual nome da origem é', nome_bd)
-    cur.execute("UPDATE origem SET origem = ? WHERE id = ?", (
-        nome, id_org))
-    print()
-    con.commit()
-    print('Origem alterada com sucesso')
-    input('Pressione ENTER para continuar...')
+
+    if nome != nome_bd:
+        for linha in cons:
+            origem = linha[1]
+
+            if nome == origem:
+                print()
+                print('Nome de origem já existe')
+                print()
+                input('Pressione ENTER para continuar...')
+                duplicado = True
+                break
+
+    if not duplicado:
+        cur.execute("UPDATE origem SET origem = ? WHERE id = ?", (
+            nome, id_org))
+        print()
+        con.commit()
+        print('Origem alterada com sucesso')
+        input('Pressione ENTER para continuar...')
 
 
 # Função para alterar um registro da tabela receitas

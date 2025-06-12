@@ -330,7 +330,8 @@ while True:
 
                             nome_bd = cons[0][1]  # type: ignore
 
-                            alterar.alterar_origem(cur, con, id_org, nome_bd)
+                            alterar.alterar_origem(cur, con, id_org, nome_bd,
+                                                   linhas)
                     else:
                         print('Nenhum registro encontrado.')
                         input('Pressione ENTER para continuar...')
