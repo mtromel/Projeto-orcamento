@@ -273,7 +273,7 @@ while True:
 
                             nome_bd = cons[0][1]  # type: ignore
                             alterar.alterar_categoria(
-                                cur, con, id_cat, nome_bd)
+                                cur, con, id_cat, nome_bd, linhas)
                     else:
                         print('Nenhum registro encontrado.')
                         input('Pressione ENTER para continuar...')

@@ -129,15 +129,34 @@ def alterar_despesa(con, cur, per, id_desp, cons: list):
 
 
 # Função para alterar um registro da tabela categorias
-def alterar_categoria(cur, con, id_cat, nome_bd):
+def alterar_categoria(cur, con, id_cat, nome_bd, cons):
+    duplicado = False
     nome = utils.input_com_placeholder(
         'O atual nome da categoria é', nome_bd)
-    cur.execute("UPDATE categorias SET categoria = ? WHERE id = ?", (
-        nome, id_cat))
-    print()
-    con.commit()
-    print('Categoria alterada com sucesso')
-    input('Pressione ENTER para continuar...')
+
+    if nome != nome_bd:
+        for linha in cons:
+            i = 0
+            categoria = linha[1]
+
+            if nome == categoria:
+                print()
+                print('Nome de categoria já existe')
+                print()
+                input('Pressione ENTER para continuar...')
+                duplicado = True
+                break
+            i += 1
+
+    if not duplicado:
+        cur.execute("UPDATE categorias SET categoria = ? WHERE id = ?", (
+            nome, id_cat))
+
+        print()
+        con.commit()
+        print('Categoria alterada com sucesso')
+
+        input('Pressione ENTER para continuar...')
 
 
 # Função para alterar um registro da tabela desp_fixa
