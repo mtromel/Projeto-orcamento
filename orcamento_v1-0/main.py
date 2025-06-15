@@ -725,7 +725,7 @@ while True:
                     receitas = relatorios.rel_soma_geral(
                         cur, 'valor', 'receitas', per)
 
-                    print('-' * 40)
+                    print('-' * 42)
                     print(f'Orçamento mensal do período {per} -'
                           f' {periodo[0][1]}')
                     print()
@@ -774,9 +774,9 @@ while True:
                             total += linha[1]
 
                     print('Despesas por categoria: ')
-                    print('-' * 27)
-                    print('    CATEGORIA         VALOR')
-                    print('-' * 27)
+                    print('-' * 33)
+                    print('    CATEGORIA          VALOR')
+                    print('-' * 33)
                     for linha in resultado2:
                         tam = (18 - (len(categorias2[int(linha[0]) - 1][1])))
                         print(f'    {categorias2[int(linha[0]) - 1][1]}:',
