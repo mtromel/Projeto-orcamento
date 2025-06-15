@@ -1,10 +1,39 @@
+from prettytable import PrettyTable
+
+
 # Função para pagar um registro de uma tabela
-def apagar_registro(con, cur, tabela):
-    id_reg = int(input('Insira o número do registro que deseja apagar: '))
-    cur.execute(f'DELETE FROM {tabela} WHERE id = ?', (id_reg,))
-    con.commit()
+def apagar_registro(con, cur, tabela, linha, col):
     print()
-    print('Registro apagado com sucesso')
+    id_reg = int(input('Insira o número do registro que deseja apagar: '))
+
+    # Verifica se o registro existe
+    encontrado = False
+    for linhas in linha:
+        if linhas[0] == id_reg:
+            impr_tabela = PrettyTable()
+            impr_tabela.field_names = col
+            impr_tabela.add_row(linhas)
+            print()
+            print(impr_tabela)
+            print()
+            conf = input('Confirma a exclusão do registro acima? Digite "S"'
+                         ' para Sim e "N" para não: ').upper()
+            if conf == 'S':
+                cur.execute(f'DELETE FROM {tabela} WHERE id = ?', (id_reg,))
+                con.commit()
+                print()
+                print('Registro apagado com sucesso')
+                encontrado = True
+                break
+            else:
+                print()
+                print('Operação cancelada')
+                encontrado = True
+                break
+    if not encontrado:
+        print()
+        print(f'Registro com ID {id_reg} não encontrado na tabela {tabela}')
+
     input('Pressione ENTER para continuar...')
 
 

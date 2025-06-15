@@ -442,7 +442,8 @@ while True:
                                  ' período? Digite 3. \n'
                                  ' SELECIONE A OPÇÃO DESEJADA: ')
                     if tipo == '1':
-                        deletar.apagar_registro(con, cur, 'despesas')
+                        deletar.apagar_registro(con, cur, 'despesas', linha,
+                                                col)
                     elif tipo == '2':
                         deletar.apagar_todos_registros(con, cur, 'despesas')
                     elif tipo == '3':
@@ -468,7 +469,8 @@ while True:
                                  ' Digite 2. \n'
                                  'SELECIONE A OPÇÃO DESEJADA: ')
                     if tipo == '1':
-                        deletar.apagar_registro(con, cur, 'periodo')
+                        deletar.apagar_registro(con, cur, 'periodo', linha,
+                                                col)
                     elif tipo == '2':
                         deletar.apagar_todos_registros(con, cur, 'periodo')
                     else:
@@ -489,7 +491,8 @@ while True:
                                  ' Digite 2. \n'
                                  'SELECIONE A OPÇÃO DESEJADA: ')
                     if tipo == '1':
-                        deletar.apagar_registro(con, cur, 'categorias')
+                        deletar.apagar_registro(con, cur, 'categorias', linha,
+                                                col)
                     elif tipo == '2':
                         deletar.apagar_todos_registros(con, cur, 'categorias')
                     else:
@@ -511,7 +514,8 @@ while True:
                                  ' Digite 2. \n'
                                  'SELECIONE A OPÇÃO DESEJADA: ')
                     if tipo == '1':
-                        deletar.apagar_registro(con, cur, 'desp_fixa')
+                        deletar.apagar_registro(con, cur, 'desp_fixa', linha,
+                                                col)
                     elif tipo == '2':
                         deletar.apagar_todos_registros(con, cur, 'desp_fixa')
                     else:
@@ -532,7 +536,8 @@ while True:
                                  ' Digite 2. \n'
                                  'SELECIONE A OPÇÃO DESEJADA: ')
                     if tipo == '1':
-                        deletar.apagar_registro(con, cur, 'origem')
+                        deletar.apagar_registro(con, cur, 'origem', linha,
+                                                col)
                     elif tipo == '2':
                         deletar.apagar_todos_registros(con, cur, 'origem')
                     else:
@@ -556,7 +561,8 @@ while True:
                                  ' período? Digite 3. \n'
                                  ' SELECIONE A OPÇÃO DESEJADA: ')
                     if tipo == '1':
-                        deletar.apagar_registro(con, cur, 'receitas')
+                        deletar.apagar_registro(con, cur, 'receitas', linha,
+                                                col)
                     elif tipo == '2':
                         deletar.apagar_todos_registros(con, cur, 'receitas')
                     elif tipo == '3':
@@ -584,7 +590,8 @@ while True:
                                  ' Digite 2. \n'
                                  'SELECIONE A OPÇÃO DESEJADA: ')
                     if tipo == '1':
-                        deletar.apagar_registro(con, cur, 'rec_templates')
+                        deletar.apagar_registro(con, cur, 'rec_templates',
+                                                linha, col)
                     elif tipo == '2':
                         deletar.apagar_todos_registros(
                             con, cur, 'rec_templates')
