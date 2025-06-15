@@ -13,7 +13,7 @@ Objetivos     | 20%
 Aposentadoria | 10%
 Gastar        | 10%
 
-Para isso o sistema permite vincular um despesa registrada a um desses grupos
+Para isso o sistema permite vincular uma despesa registrada a um desses grupos
 de planejamento. Nesta primeira versão do sistema é possível acompanhar o
 andamento do planejamento por meio de relatórios. Melhorias futuras vão
 permitir que existam alertas e gráficos mostrando o planejamento do mês atual
