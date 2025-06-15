@@ -1,4 +1,6 @@
 from prettytable import PrettyTable
+import consultas
+import utils
 
 
 # Função para pagar um registro de uma tabela
@@ -55,9 +57,13 @@ def apagar_todos_registros(con, cur, tabela):
 
 # Função para apagar todos os registros de um periodo específico de uma tabela
 def apagar_todos_reg_com_where(con, cur, tabela, campo, valor):
+    linhas, colunas = consultas.consulta_com_where(cur, tabela, campo, valor)
+    utils.imprimir_tabelas(linhas, colunas)
+    print()
+
     confirm = input(f'Tem certeza que deseja apagar todos os registros da'
-                    f' tabela {tabela} para o período {valor}? Digite S para'
-                    f' confirmar: ').upper()
+                    f' tabela {tabela} para o período {valor} listados acima?'
+                    f' Digite S para confirmar: ').upper()
     if confirm == 'S':
         cur.execute(f'DELETE FROM {tabela} WHERE {campo} = ?', (valor,))
         con.commit()
