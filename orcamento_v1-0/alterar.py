@@ -257,8 +257,21 @@ def alterar_receitas(con, cur, per, id_rece, cons: list):
         'A atual descrição da receita é', desc_bd)
     data = utils.input_com_placeholder(
         'O dia atual da receita é', data_bd_str)
-    valor = utils.input_com_placeholder(
-        'O valor atual da receita é', valor_bd_str)
+
+    while True:
+        valor_in = utils.input_com_placeholder(
+            'O atual valor da receita é', valor_bd_str).replace(',', '.')
+
+        try:
+            if valor_in:
+                valor = float(valor_in)
+                break
+            else:
+                print('Valor inválido. Insira um valor válido')
+                continue
+        except ValueError:
+            print('Valor inválido. Insira um valor válido')
+            continue
 
     cur.execute("UPDATE receitas SET descricao = ?, data = ?, valor = ?,"
                 " periodo_id = ? WHERE id = ?", (desc, data, valor, per,
@@ -280,8 +293,22 @@ def alterar_rec_templates(
 
     desc = utils.input_com_placeholder(
         'A atual descrição da receita é', desc_bd)
-    valor = utils.input_com_placeholder(
-        'O valor atual da receita é', valor_bd_str)
+
+    while True:
+        valor_in = utils.input_com_placeholder(
+            'O atual valor da receita é', valor_bd_str).replace(',', '.')
+
+        try:
+            if valor_in:
+                valor = float(valor_in)
+                break
+            else:
+                print('Valor inválido. Insira um valor válido')
+                continue
+        except ValueError:
+            print('Valor inválido. Insira um valor válido')
+            continue
+
     data = utils.input_com_placeholder('O dia atual da receita é', data_bd_str)
     cur.execute("UPDATE rec_templates SET descricao = ?, data = ?, valor = ?"
                 " WHERE id = ?", (desc, data, valor, id_tpl))
