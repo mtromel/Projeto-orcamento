@@ -2,18 +2,15 @@ import utils
 import locale
 import os
 from datetime import datetime
-from pathlib import Path
 import consultas
 
 
-THIS_FOLDER = Path(__file__).parent.resolve()
 locale.setlocale(locale.LC_ALL, 'pt_BR.UTF-8')
-con, cur = utils.conectar_bd(THIS_FOLDER / 'bd_orcamento.db')
 cabecalho_padrao = 'CADASTRO DE '
 
 
 # Função para cadastrar as origens de despesas
-def cadastro_origens():
+def cadastro_origens(con, cur):
     while True:
         os.system('cls')
         cabecalho = cabecalho_padrao + 'ORIGENS'
@@ -41,7 +38,7 @@ def cadastro_origens():
 
 
 # Função para cadastrar os grupos de planejamento
-def cadastro_planejamento():
+def cadastro_planejamento(con, cur):
     while True:
         os.system('cls')
         cabecalho = cabecalho_padrao + 'GRUPOS DE PLANEJAMENTO'
@@ -71,7 +68,7 @@ def cadastro_planejamento():
 
 
 # Função para cadastrar as categorias de despesas
-def cadastra_categorias():
+def cadastra_categorias(con, cur):
     while True:
         os.system('cls')
         cabecalho = cabecalho_padrao + 'CATEGORIAS'
@@ -100,7 +97,7 @@ def cadastra_categorias():
 
 
 # Função para cadastrar os períodos de lançamentos
-def cadastro_periodo():
+def cadastro_periodo(con, cur):
     while True:
         os.system('cls')
         cabecalho = cabecalho_padrao + 'PERÍODOS'
@@ -146,7 +143,7 @@ def cadastro_periodo():
 
 # Função para cadastrar os templates de receitas que são usadas para lançar as
 # receitas mensais
-def cadastro_templates_receitas():
+def cadastro_templates_receitas(con, cur):
     while True:
         os.system('cls')
         cabecalho = cabecalho_padrao + 'TEMPLATES DE RECEITAS'
@@ -180,7 +177,7 @@ def cadastro_templates_receitas():
 
 
 # Função para cadastrar as despesas fixas
-def cadastro_despesas_fixas():
+def cadastro_despesas_fixas(con, cur):
     while True:
         os.system('cls')
         cabecalho = cabecalho_padrao + 'DESPESAS FIXAS'
@@ -232,7 +229,7 @@ def cadastro_despesas_fixas():
 
 
 # Função para cadastrar as receitas
-def cadastro_receitas():
+def cadastro_receitas(con, cur):
     while True:
         os.system('cls')
         cabecalho = cabecalho_padrao + 'RECEITAS'
@@ -294,7 +291,7 @@ def cadastro_receitas():
 
 
 # Função para cadastrar as despesas
-def cadastro_despesas():
+def cadastro_despesas(con, cur):
     while True:
         os.system('cls')
         cabecalho = cabecalho_padrao + 'DESPESAS POR PERÍODO'
@@ -322,7 +319,7 @@ def cadastro_despesas():
                                     ' despesas fixas cadastradas? Digite S'
                                     ' para Sim e N para Não: ').upper()
             if desp_fixa_input == 'S':
-                adiciona_desp_fixa_no_periodo(cur, per_completo, per_int)
+                adiciona_desp_fixa_no_periodo(con, cur, per_completo, per_int)
         else:
             existe_fixa = False
             for linha in cons_desp:
@@ -341,7 +338,8 @@ def cadastro_despesas():
                     ' Digite S para Sim e N para Não: ').upper()
 
                 if desp_fixa_input == 'S':
-                    adiciona_desp_fixa_no_periodo(cur, per_completo, per_int)
+                    adiciona_desp_fixa_no_periodo(
+                        con, cur, per_completo, per_int)
 
         print()
         print('Despesas já cadastradas para este período:')
@@ -508,7 +506,7 @@ def cadastro_despesas():
             break
 
 
-def adiciona_desp_fixa_no_periodo(cur, per_completo, per_int):
+def adiciona_desp_fixa_no_periodo(con, cur, per_completo, per_int):
     desp_fixas, _ = consultas.consulta_padrao(cur, 'desp_fixa')
     for linha in desp_fixas:
         data_completa = (str(linha[2]) + '/' + per_completo)

@@ -22,24 +22,30 @@ import alterar
 import deletar
 import relatorios
 import create_bd_orcamento
-import sqlite3
 from pathlib import Path
 
 
-THIS_FOLDER = Path(__file__).parent.resolve()
-con, cur = utils.conectar_bd(THIS_FOLDER / 'bd_orcamento.db')
-
+THIS_FOLDER = Path(__file__).parent
+DB_FILE = 'bd_orcamento.db'
+DB_PATH = THIS_FOLDER / DB_FILE
 
 # Consulta se o banco de dados existe, caso contrário, cria o banco de dados
-cons = os.path.exists('bd_orcamento.db')
-if not cons:
-    try:
-        create_bd_orcamento.create_bd
-    except sqlite3.Error:
-        print('Erro ao criar o banco de dados.')
+if not DB_PATH.exists():
+    create_bd_orcamento.create_bd(DB_PATH)
 
+con, cur = utils.conectar_bd(DB_PATH)
+
+if con and cur:
+    continuar = True
+else:
+    continuar = False
+    input('Não foi possível conectar ao banco de dados. O programa será'
+          ' encerrado.')
 
 while True:
+    if not continuar:
+        break
+
     # Limpa a tela e imprime o menu principal do sistema
     os.system('cls')
     utils.print_cabecalho('SISTEMA DE ORÇAMENTO PESSOAL')
@@ -70,31 +76,31 @@ while True:
             match opcao_cad:
                 case '1':
                     # Chama a função de cadastro de despesas
-                    insere.cadastro_despesas()
+                    insere.cadastro_despesas(con, cur)
                     continue
                 case '2':
                     # Chama a função de cadastro de períodos de despesas
-                    insere.cadastro_periodo()
+                    insere.cadastro_periodo(con, cur)
                     continue
                 case '3':
                     # Chama a função de cadastro de categorias de despesas
-                    insere.cadastra_categorias()
+                    insere.cadastra_categorias(con, cur)
                     continue
                 case '4':
                     # Chama a função de cadastro de despesas fixas
-                    insere.cadastro_despesas_fixas()
+                    insere.cadastro_despesas_fixas(con, cur)
                     continue
                 case '5':
                     # Chama a função de cadastro de origens de despesas
-                    insere.cadastro_origens()
+                    insere.cadastro_origens(con, cur)
                     continue
                 case '6':
                     # Chama a função de cadastro de receitas
-                    insere.cadastro_receitas()
+                    insere.cadastro_receitas(con, cur)
                     continue
                 case '7':
                     # Chama a função de cadastro de templates de receitas
-                    insere.cadastro_templates_receitas()
+                    insere.cadastro_templates_receitas(con, cur)
                     continue
                 case '8':
                     # Retorna ao menu principal
@@ -838,6 +844,7 @@ while True:
                     continue
         case '6':
             # Fecha a conexão do banco de dados e encerra o programa
+            cur.close()
             con.close()
             break
         case _:

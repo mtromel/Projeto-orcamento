@@ -3,10 +3,14 @@ from prettytable import PrettyTable
 
 
 # Função para criar a conexão e o cursor do banco de dados e retorná-los
-def conectar_bd(banco):
-    con = sqlite3.connect(banco)
-    cur = con.cursor()
-    return con, cur
+def conectar_bd(db_path):
+    try:
+        con = sqlite3.connect(db_path)
+        cur = con.cursor()
+        return con, cur
+    except sqlite3.Error as e:
+        print(f'Erro ao conectar ao banco de dados: {e}')
+        return None, None
 
 
 # Função para imprimir o cabeçalho de uma tela
