@@ -1,0 +1,279 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>746</width>
+    <height>646</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>MainWindow</string>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <widget class="QWidget" name="gridLayoutWidget">
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>0</y>
+      <width>721</width>
+      <height>531</height>
+     </rect>
+    </property>
+    <layout class="QGridLayout" name="gridLayout">
+     <item row="0" column="0">
+      <widget class="QLabel" name="label">
+       <property name="text">
+        <string>Informe o período que deseja consultar</string>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="1">
+      <widget class="QTextBrowser" name="textBrowser"/>
+     </item>
+    </layout>
+   </widget>
+  </widget>
+  <widget class="QMenuBar" name="menubar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>746</width>
+     <height>33</height>
+    </rect>
+   </property>
+   <widget class="QMenu" name="menuMenu">
+    <property name="title">
+     <string>Menu</string>
+    </property>
+    <widget class="QMenu" name="menuCadastrar">
+     <property name="title">
+      <string>Cadastrar</string>
+     </property>
+     <addaction name="actionDespesas"/>
+     <addaction name="actionPer_odos"/>
+     <addaction name="actionCategorias"/>
+     <addaction name="actionDespesas_fixas"/>
+     <addaction name="actionOrigens"/>
+     <addaction name="actionTemplates_de_receitas"/>
+    </widget>
+    <widget class="QMenu" name="menuConsultar">
+     <property name="title">
+      <string>Consultar</string>
+     </property>
+     <addaction name="actionDespesas_2"/>
+     <addaction name="actionPer_odos_2"/>
+     <addaction name="actionCategorias_2"/>
+     <addaction name="actionGrupos_de_planejamento"/>
+     <addaction name="actionDespesas_fixas_2"/>
+     <addaction name="actionOrigens_2"/>
+     <addaction name="actionReceitas"/>
+     <addaction name="actionTemplates_de_receitas_2"/>
+    </widget>
+    <widget class="QMenu" name="menuAlterar">
+     <property name="title">
+      <string>Alterar</string>
+     </property>
+     <addaction name="actionDespeas"/>
+     <addaction name="actionCategorias_3"/>
+     <addaction name="actionDespesas_fixas_3"/>
+     <addaction name="actionOrigens_3"/>
+     <addaction name="actionReceitas_2"/>
+     <addaction name="actionTemplates_de_receitas_3"/>
+    </widget>
+    <widget class="QMenu" name="menuExcluir">
+     <property name="title">
+      <string>Excluir</string>
+     </property>
+     <addaction name="actionDespesas_3"/>
+     <addaction name="actionPer_odos_3"/>
+     <addaction name="actionCategorias_4"/>
+     <addaction name="actionDespesas_fixas_4"/>
+     <addaction name="actionOrigens_4"/>
+     <addaction name="actionReceitas_3"/>
+     <addaction name="actionTemplates_de_receitas_4"/>
+    </widget>
+    <widget class="QMenu" name="menuRelat_rios">
+     <property name="title">
+      <string>Relatórios</string>
+     </property>
+     <addaction name="actionTotal_por_categoria"/>
+     <addaction name="actionTotal_por_grupo_de_planejamento"/>
+     <addaction name="actionMensal_por_per_odo"/>
+     <addaction name="actionTotal_por_origem_de_despesas"/>
+    </widget>
+    <addaction name="menuCadastrar"/>
+    <addaction name="menuConsultar"/>
+    <addaction name="menuAlterar"/>
+    <addaction name="menuExcluir"/>
+    <addaction name="menuRelat_rios"/>
+   </widget>
+   <addaction name="menuMenu"/>
+  </widget>
+  <widget class="QStatusBar" name="statusbar"/>
+  <action name="actionDespesas">
+   <property name="text">
+    <string>Despesas</string>
+   </property>
+  </action>
+  <action name="actionPer_odos">
+   <property name="text">
+    <string>Períodos</string>
+   </property>
+  </action>
+  <action name="actionCategorias">
+   <property name="text">
+    <string>Categorias</string>
+   </property>
+  </action>
+  <action name="actionDespesas_fixas">
+   <property name="text">
+    <string>Despesas fixas</string>
+   </property>
+  </action>
+  <action name="actionOrigens">
+   <property name="text">
+    <string>Origens</string>
+   </property>
+  </action>
+  <action name="actionTemplates_de_receitas">
+   <property name="text">
+    <string>Templates de receitas</string>
+   </property>
+  </action>
+  <action name="actionDespesas_2">
+   <property name="text">
+    <string>Despesas</string>
+   </property>
+  </action>
+  <action name="actionPer_odos_2">
+   <property name="text">
+    <string>Períodos</string>
+   </property>
+  </action>
+  <action name="actionCategorias_2">
+   <property name="text">
+    <string>Categorias</string>
+   </property>
+  </action>
+  <action name="actionGrupos_de_planejamento">
+   <property name="text">
+    <string>Grupos de planejamento</string>
+   </property>
+  </action>
+  <action name="actionDespesas_fixas_2">
+   <property name="text">
+    <string>Despesas fixas</string>
+   </property>
+  </action>
+  <action name="actionOrigens_2">
+   <property name="text">
+    <string>Origens</string>
+   </property>
+  </action>
+  <action name="actionReceitas">
+   <property name="text">
+    <string>Receitas</string>
+   </property>
+  </action>
+  <action name="actionTemplates_de_receitas_2">
+   <property name="text">
+    <string>Templates de receitas</string>
+   </property>
+  </action>
+  <action name="actionDespeas">
+   <property name="text">
+    <string>Despeas</string>
+   </property>
+  </action>
+  <action name="actionCategorias_3">
+   <property name="text">
+    <string>Categorias</string>
+   </property>
+  </action>
+  <action name="actionDespesas_fixas_3">
+   <property name="text">
+    <string>Despesas fixas</string>
+   </property>
+  </action>
+  <action name="actionOrigens_3">
+   <property name="text">
+    <string>Origens</string>
+   </property>
+  </action>
+  <action name="actionReceitas_2">
+   <property name="text">
+    <string>Receitas</string>
+   </property>
+  </action>
+  <action name="actionTemplates_de_receitas_3">
+   <property name="text">
+    <string>Templates de receitas</string>
+   </property>
+  </action>
+  <action name="actionDespesas_3">
+   <property name="text">
+    <string>Despesas</string>
+   </property>
+  </action>
+  <action name="actionPer_odos_3">
+   <property name="text">
+    <string>Períodos</string>
+   </property>
+  </action>
+  <action name="actionCategorias_4">
+   <property name="text">
+    <string>Categorias</string>
+   </property>
+  </action>
+  <action name="actionDespesas_fixas_4">
+   <property name="text">
+    <string>Despesas fixas</string>
+   </property>
+  </action>
+  <action name="actionOrigens_4">
+   <property name="text">
+    <string>Origens</string>
+   </property>
+  </action>
+  <action name="actionReceitas_3">
+   <property name="text">
+    <string>Receitas</string>
+   </property>
+  </action>
+  <action name="actionTemplates_de_receitas_4">
+   <property name="text">
+    <string>Templates de receitas</string>
+   </property>
+  </action>
+  <action name="actionTotal_por_categoria">
+   <property name="text">
+    <string>Total por categoria</string>
+   </property>
+  </action>
+  <action name="actionTotal_por_grupo_de_planejamento">
+   <property name="text">
+    <string>Total por grupo de planejamento</string>
+   </property>
+   <property name="statusTip">
+    <string>Relatório que exibe o total por grupo de planejamento para o período selecionado</string>
+   </property>
+  </action>
+  <action name="actionMensal_por_per_odo">
+   <property name="text">
+    <string>Mensal por período</string>
+   </property>
+  </action>
+  <action name="actionTotal_por_origem_de_despesas">
+   <property name="text">
+    <string>Total por origem de despesas</string>
+   </property>
+  </action>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
