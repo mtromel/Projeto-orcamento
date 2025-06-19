@@ -1,0 +1,52 @@
+Apps:
+	dados
+
+
+Models:
+	dados
+		categorias
+			categoria (CHAR)
+
+		origem
+			origem (CHAR)
+
+		periodo
+			período (CHAR)
+
+		planejamento
+			grupo (CHAR)
+
+		receitas
+			descricao (CHAR)
+			data (DATE)
+			valor (FLOAT)
+			periodo_id FK período (INT)
+
+		rec_templates
+			descricao (CHAR)
+			valor (FLOAT)
+			data (DATE)
+
+		despesas
+			desc_loja (CHAR)
+			desc_desp (CHAR)
+			data (DATE)
+			valor (FLOAT)
+			categoria_id FK categorias (INT)
+			parcela_atual (INT)
+			parcelas_total (INT)
+			grupo_id FK planejamento (INT)
+			tipo (CHOICE)
+				('F', 'FIXA'),
+				('V', 'VARIAVEL'),
+			origem_id FK origem (INT)
+			periodo_id FK período (INT)
+
+		desp_fixa
+			desc_desp (CHAR)
+			dia (DATE)
+			categoria_id FK categorias (INT)
+			valor (FLOAT)
+			grupo_id FK planejamento (INT)
+			origem_id FK origem (INT)
+		
