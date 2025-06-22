@@ -1,0 +1,13 @@
+{% load static %}
+
+<link rel="stylesheet" href="{% static "dados/style.css" %}">
+
+{% if latest_category_list %}
+    <ul>
+    {% for category in latest_category_list %}
+        <li>{{ category.nome }}</li>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>Nenhuma categoria disponível.</p>
+{% endif %}

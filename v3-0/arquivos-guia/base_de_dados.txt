@@ -4,14 +4,14 @@ Apps:
 
 Models:
 	dados
-		categorias
-			categoria (CHAR)
+		categoria
+			nome (CHAR)
 
 		origem
-			origem (CHAR)
+			nome (CHAR)
 
 		periodo
-			período (CHAR)
+			periodo (CHAR)
 
 		planejamento
 			grupo (CHAR)
@@ -25,7 +25,7 @@ Models:
 		rec_templates
 			descricao (CHAR)
 			valor (FLOAT)
-			data (DATE)
+			dia (INT)
 
 		despesas
 			desc_loja (CHAR)
@@ -44,7 +44,7 @@ Models:
 
 		desp_fixa
 			desc_desp (CHAR)
-			dia (DATE)
+			dia (INT)
 			categoria_id FK categorias (INT)
 			valor (FLOAT)
 			grupo_id FK planejamento (INT)
