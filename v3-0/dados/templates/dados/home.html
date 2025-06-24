@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Controle de Orçamento Pessoal</title>
+    <!-- Inclui o Tailwind CSS via CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Define a fonte Inter -->
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 min-h-screen flex flex-col items-center py-8 px-4 sm:px-6 lg:px-8">
+    <!-- Cabeçalho da Aplicação -->
+    <header class="w-full max-w-4xl bg-white p-6 rounded-lg shadow-md mb-8">
+        <h1 class="text-3xl font-bold text-gray-800 text-center">Meu Orçamento Pessoal</h1>
+    </header>
+
+    <!-- Seção Principal de Conteúdo -->
+    <main class="w-full max-w-4xl bg-white p-6 rounded-lg shadow-md">
+        <!-- Menu de Navegação com 4 Botões Principais e Submenus Expansíveis -->
+        <nav class="relative mb-8 flex flex-wrap justify-center gap-4">
+            <!-- Menu Cadastrar -->
+            <div class="relative group">
+                <button class="bg-blue-700 hover:bg-blue-800 text-white font-semibold py-3 px-6 rounded-lg shadow-md transition duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-blue-600 focus:ring-opacity-75 flex items-center">
+                    Cadastrar
+                    <!-- Ícone de seta para indicar submenu -->
+                    <svg class="w-4 h-4 ml-2 transform group-hover:rotate-180 transition-transform duration-300" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
+                </button>
+                <!-- Submenu de Cadastrar -->
+                <div class="absolute top-full left-1/2 -translate-x-1/2 w-48 bg-white rounded-lg shadow-lg z-10 hidden group-hover:block">
+                    <ul class="py-2">
+                        <li><button class="block w-full text-left px-4 py-2 text-gray-800 hover:bg-green-100 hover:text-green-700 rounded-md transition duration-200">Receita</button></li>
+                        <li><button class="block w-full text-left px-4 py-2 text-gray-800 hover:bg-red-100 hover:text-red-700 rounded-md transition duration-200">Despesa</button></li>
+                        <li><button class="block w-full text-left px-4 py-2 text-gray-800 hover:bg-purple-100 hover:text-purple-700 rounded-md transition duration-200">Categoria</button></li>
+                        <li><button class="block w-full text-left px-4 py-2 text-gray-800 hover:bg-orange-100 hover:text-orange-700 rounded-md transition duration-200">Origem</button></li>
+                        <li><button class="block w-full text-left px-4 py-2 text-gray-800 hover:bg-blue-100 hover:text-blue-700 rounded-md transition duration-200">Período</button></li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Menu Consultar -->
+            <div class="relative group">
+                <button class="bg-blue-700 hover:bg-blue-800 text-white font-semibold py-3 px-6 rounded-lg shadow-md transition duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-blue-600 focus:ring-opacity-75 flex items-center">
+                    Consultar
+                    <!-- Ícone de seta para indicar submenu -->
+                    <svg class="w-4 h-4 ml-2 transform group-hover:rotate-180 transition-transform duration-300" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
+                </button>
+                <!-- Submenu de Consultar -->
+                <div class="absolute top-full left-1/2 -translate-x-1/2 w-48 bg-white rounded-lg shadow-lg z-10 hidden group-hover:block">
+                    <ul class="py-2">
+                        <li><button class="block w-full text-left px-4 py-2 text-gray-800 hover:bg-green-100 hover:text-green-700 rounded-md transition duration-200">Receita</button></li>
+                        <li><button class="block w-full text-left px-4 py-2 text-gray-800 hover:bg-red-100 hover:text-red-700 rounded-md transition duration-200">Despesa</button></li>
+                        <li><button class="block w-full text-left px-4 py-2 text-gray-800 hover:bg-purple-100 hover:text-purple-700 rounded-md transition duration-200">Categoria</button></li>
+                        <li><button class="block w-full text-left px-4 py-2 text-gray-800 hover:bg-orange-100 hover:text-orange-700 rounded-md transition duration-200">Origem</button></li>
+                        <li><button class="block w-full text-left px-4 py-2 text-gray-800 hover:bg-blue-100 hover:text-blue-700 rounded-md transition duration-200">Período</button></li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Menu Alterar -->
+            <div class="relative group">
+                <button class="bg-blue-700 hover:bg-blue-800 text-white font-semibold py-3 px-6 rounded-lg shadow-md transition duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-blue-600 focus:ring-opacity-75 flex items-center">
+                    Alterar
+                    <!-- Ícone de seta para indicar submenu -->
+                    <svg class="w-4 h-4 ml-2 transform group-hover:rotate-180 transition-transform duration-300" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
+                </button>
+                <!-- Submenu de Alterar -->
+                <div class="absolute top-full left-1/2 -translate-x-1/2 w-48 bg-white rounded-lg shadow-lg z-10 hidden group-hover:block">
+                    <ul class="py-2">
+                        <li><button class="block w-full text-left px-4 py-2 text-gray-800 hover:bg-green-100 hover:text-green-700 rounded-md transition duration-200">Receita</button></li>
+                        <li><button class="block w-full text-left px-4 py-2 text-gray-800 hover:bg-red-100 hover:text-red-700 rounded-md transition duration-200">Despesa</button></li>
+                        <li><button class="block w-full text-left px-4 py-2 text-gray-800 hover:bg-purple-100 hover:text-purple-700 rounded-md transition duration-200">Categoria</button></li>
+                        <li><button class="block w-full text-left px-4 py-2 text-gray-800 hover:bg-orange-100 hover:text-orange-700 rounded-md transition duration-200">Origem</button></li>
+                        <li><button class="block w-full text-left px-4 py-2 text-gray-800 hover:bg-blue-100 hover:text-blue-700 rounded-md transition duration-200">Período</button></li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Menu Excluir -->
+            <div class="relative group">
+                <button class="bg-blue-700 hover:bg-blue-800 text-white font-semibold py-3 px-6 rounded-lg shadow-md transition duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-blue-600 focus:ring-opacity-75 flex items-center">
+                    Excluir
+                    <!-- Ícone de seta para indicar submenu -->
+                    <svg class="w-4 h-4 ml-2 transform group-hover:rotate-180 transition-transform duration-300" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
+                </button>
+                <!-- Submenu de Excluir -->
+                <div class="absolute top-full left-1/2 -translate-x-1/2 w-48 bg-white rounded-lg shadow-lg z-10 hidden group-hover:block">
+                    <ul class="py-2">
+                        <li><button class="block w-full text-left px-4 py-2 text-gray-800 hover:bg-green-100 hover:text-green-700 rounded-md transition duration-200">Receita</button></li>
+                        <li><button class="block w-full text-left px-4 py-2 text-gray-800 hover:bg-red-100 hover:text-red-700 rounded-md transition duration-200">Despesa</button></li>
+                        <li><button class="block w-full text-left px-4 py-2 text-gray-800 hover:bg-purple-100 hover:text-purple-700 rounded-md transition duration-200">Categoria</button></li>
+                        <li><button class="block w-full text-left px-4 py-2 text-gray-800 hover:bg-orange-100 hover:text-orange-700 rounded-md transition duration-200">Origem</button></li>
+                        <li><button class="block w-full text-left px-4 py-2 text-gray-800 hover:bg-blue-100 hover:text-blue-700 rounded-md transition duration-200">Período</button></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+
+        <hr class="border-gray-200 my-8">
+
+        <!-- Resultado do Mês Atual -->
+        <section class="mb-8 p-4 bg-gray-50 rounded-lg shadow-inner">
+            <h2 class="text-xl font-semibold text-gray-700 mb-4 text-center">Resultado do Mês Atual: Junho 2025</h2>
+            <div class="flex flex-col sm:flex-row justify-around items-center space-y-4 sm:space-y-0 sm:space-x-8">
+                <div class="text-center">
+                    <p class="text-lg font-medium text-gray-600">Total de Receitas:</p>
+                    <p class="text-2xl font-bold text-green-600">R$ 5.500,00</p>
+                </div>
+                <div class="text-center">
+                    <p class="text-lg font-medium text-gray-600">Total de Despesas:</p>
+                    <p class="text-2xl font-bold text-red-600">R$ 3.200,00</p>
+                </div>
+                <div class="text-center">
+                    <p class="text-lg font-medium text-gray-600">Saldo Atual:</p>
+                    <p class="text-3xl font-bold text-blue-600">R$ 2.300,00</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Gráfico do Mês Atual (Placeholder) -->
+        <section class="p-4 bg-gray-50 rounded-lg shadow-inner">
+            <h2 class="text-xl font-semibold text-gray-700 mb-4 text-center">Visão Geral do Mês (Gráfico)</h2>
+            <div class="bg-white border border-gray-200 rounded-md h-64 flex items-center justify-center text-gray-500">
+                <!-- Aqui você integraria sua biblioteca de gráficos (ex: Chart.js, D3.js, Recharts) -->
+                <p>Placeholder para o Gráfico de Receitas vs Despesas</p>
+            </div>
+        </section>
+    </main>
+
+    <!-- Rodapé (Opcional) -->
+    <footer class="w-full max-w-4xl text-center mt-8 text-gray-500 text-sm">
+        <p>&copy; 2025 Webapp de Orçamento Pessoal. Todos os direitos reservados.</p>
+    </footer>
+
+    <!-- Não é necessário JavaScript para esta funcionalidade de menu, pois é controlada por Tailwind CSS (group-hover) -->
+</body>
+</html>

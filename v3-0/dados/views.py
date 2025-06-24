@@ -13,3 +13,8 @@ class IndexView(ListView):
 class ConsultaView(ListView):
     model = models.Origem  # TODO: alterar para o modelo correto
     template_name = 'dados/consulta.html'
+
+
+class HomeView(ListView):
+    model = models.Origem  # TODO: alterar para o modelo correto
+    template_name = 'dados/home.html'
